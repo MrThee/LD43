@@ -16,7 +16,10 @@ public class PlayerController : MonoBehaviour {
 	public float maxJumpHeight = 2f;
 	public float fastFallSpeed = 16f;
 	public float groundAcceleration = 80f;
-	public float groundDeceleration = 120f;
+	public float groundDeceleration = 100f;
+    public float groundDamping = 0.05f;
+
+    public float dashSpeed = 15f;
 
 	private InputParser mk_inputParser;
 
@@ -60,6 +63,10 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 
+        if (mk_inputParser.shift.pressed)
+        {
+            StartDash();
+        }
 		if(mk_inputParser.space.pressed) {
 			kCharacter.movementState.LaunchForHeight(maxJumpHeight);
 			kCharacter.kAnimation.Play("Jump");
@@ -68,12 +75,18 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 
-		kCharacter.movementState.AccelerateLateral(Vector2.zero, groundDeceleration, deltaTime);
+        DampenSpeed(deltaTime);
+
 		float latX = kCharacter.movementState.lateralVelocity.x;
 		if(latX != 0f) {
 			kCharacter.TurnTowards(Mathf.Sign(latX) * Vector3.right);
 		}
 	}
+
+    void DampenSpeed(float deltaTime) {
+        kCharacter.movementState.DampenLateral(0.05f, deltaTime);
+        kCharacter.movementState.AccelerateLateral(Vector2.zero, groundDeceleration, deltaTime);
+    }
 
 	void Running(float deltaTime){
 		Vector2 userDirection = mk_inputParser.GetDirection();
@@ -82,7 +95,7 @@ public class PlayerController : MonoBehaviour {
 		if(userDirection.x == 0f){
 			kCharacter.kAnimation.CrossFade("Idle");
 			if(ms.lateralSpeed > maxGroundDecelStartSpeed) {
-				ms.OverrideLateralSpeed(maxGroundDecelStartSpeed);
+				//ms.OverrideLateralSpeed(maxGroundDecelStartSpeed);
 			}
 			ChangePlayerState(Idle, State.Idle);
 			return;
@@ -95,6 +108,10 @@ public class PlayerController : MonoBehaviour {
 			ChangePlayerState(InAir, State.InAir);
 			return;
 		}
+        if (mk_inputParser.shift.pressed)
+        {
+            StartDash();
+        }
 
 		// Keep movin'
 		Vector2 latVelocity = maxGroundSpeed * Vector2.right * userDirection.x;
@@ -119,6 +136,11 @@ public class PlayerController : MonoBehaviour {
 			// Fast-fall
 			ms.OverrideVerticalSpeed(-fastFallSpeed);
 		}
+
+        if (mk_inputParser.shift.pressed)
+        {
+            StartDash();
+        }
 
 		// Air-drift
 		Vector2 userDir = mk_inputParser.GetDirection();
@@ -172,4 +194,37 @@ public class PlayerController : MonoBehaviour {
 			break;
 		}
 	}
+
+    void StartDash()
+    {
+        kCharacter.movementState.OverrideVerticalSpeed(0f);
+
+        float dashVelocity = GetDashVelocity();
+        kCharacter.movementState.OverrideLateralVelocity(dashVelocity);
+    }
+
+    float GetDashVelocity()
+    {
+        float xUserInput = mk_inputParser.GetDirection().x;
+        if (xUserInput < 0)
+        {
+            return -dashSpeed;
+        }
+        else if (xUserInput > 0)
+        {
+            return dashSpeed;
+        }
+
+        float facingDir = kCharacter.FacingDir;
+        if (facingDir < 0)
+        {
+            return -dashSpeed;
+        }
+        else if (facingDir > 0) {
+            return dashSpeed;
+        }
+        // just pick right if there's an absolute tie
+        return dashSpeed;
+    }
+
 }

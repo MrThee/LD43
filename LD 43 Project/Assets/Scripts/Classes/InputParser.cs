@@ -14,6 +14,10 @@ public class InputParser {
             pressed = false;
             released = false;
         }
+        public override string ToString()
+        {
+            return string.Format("pressed = {0}, released = {1}", pressed, released);
+        }
     }
 
     // buffer variables
@@ -21,12 +25,16 @@ public class InputParser {
     // so instead this object's UpdateInputBuffers call should be called from a Monobehaviour's
     // Update() callback to buffer the appropriate GetKeyDown/Up inputs.
     public PressedRelease space {get; private set;}
+    public PressedRelease shift { get; private set; }
+
     public PressedRelease down {get; private set;}
     public PressedRelease left {get; private set;}
     public PressedRelease right {get; private set;}
 
     public InputParser() {
         this.space = new PressedRelease();
+        this.shift = new PressedRelease();
+
         this.down = new PressedRelease();
         this.left = new PressedRelease();
         this.right = new PressedRelease();
@@ -62,6 +70,17 @@ public class InputParser {
             space.released = true;
         }
 
+        Debug.Log(shift);
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            shift.pressed = true;
+        }
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            shift.released = true;
+        }
+
         // Fast-fall
         if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
             down.pressed = true;
@@ -90,6 +109,7 @@ public class InputParser {
     // Call from a "FixedUpdate" after all inputs have been read/consumed
     public void ClearInputBuffers() {
         space.Reset();
+        shift.Reset();
         down.Reset();
         right.Reset();
         left.Reset();

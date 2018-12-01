@@ -100,7 +100,17 @@ public class MovementState {
 		lateralVelocity = currentLatDir * newLatSpeed;
 	}
 
-	public void AccelerateLateral(Vector2 finalLateralVelocity, float rate, float deltaTime) {
-		lateralVelocity = Vector2.MoveTowards(lateralVelocity, finalLateralVelocity, rate*deltaTime);
-	}
+    public void OverrideLateralVelocity(float newLatSpeed) {
+        lateralVelocity = Vector2.right * newLatSpeed;
+    }
+
+    public void AccelerateLateral(Vector2 finalLateralVelocity, float rate, float deltaTime)
+    {
+        lateralVelocity = Vector2.MoveTowards(lateralVelocity, finalLateralVelocity, rate * deltaTime);
+    }
+
+    public void DampenLateral(float rate, float deltaTime)
+    {
+        lateralVelocity = (1 - rate) * lateralVelocity;
+    }
 }

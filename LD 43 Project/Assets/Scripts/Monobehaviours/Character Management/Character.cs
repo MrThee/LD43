@@ -103,4 +103,14 @@ public class Character : MonoBehaviour {
 			8f * Time.fixedDeltaTime
 		);
 	}
+
+    /// <summary>
+    /// Returns what direction, left or right the player is facing.
+    /// </summary>
+    /// It's a float because you can kind of be facing the middle.
+    public float FacingDir {
+        get {
+            return kBodyTransform.transform.forward.x;
+        }
+    }
 }
