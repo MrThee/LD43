@@ -13,6 +13,9 @@ public class MovementState {
 
 	public float verticalSpeed {get; private set;}
 
+	// Handy cached fields
+	// Populated after currentTerrainNav
+	public Vector2 preJumpLateralVelocity {get; private set;}
 
 	public enum TerrainNav {
 		Ground,
@@ -72,6 +75,14 @@ public class MovementState {
 		// velocity = sqrt(2*g*h)
 		verticalSpeed = Mathf.Sqrt(heightDelta * gravityMagnitude * 2f);
 		currentTerrain = TerrainNav.Air;
+
+		preJumpLateralVelocity = lateralVelocity;
+	}
+
+	public void OverrideVerticalSpeed(float newVertSpeed){
+		verticalSpeed = newVertSpeed;
+
+		preJumpLateralVelocity = lateralVelocity;
 	}
 
 	public void AccelerateLateral(Vector2 finalLateralVelocity, float rate, float deltaTime) {
