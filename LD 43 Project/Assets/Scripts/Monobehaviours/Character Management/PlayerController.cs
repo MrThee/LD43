@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     public float groundDamping = 0.05f;
 
     public float dashSpeed = 15f;
+    public bool canDash = true;
 
 	private InputParser mk_inputParser;
 
@@ -54,7 +55,7 @@ public class PlayerController : MonoBehaviour {
 		mk_inputParser.ClearInputBuffers();
 	}
 
-	void Idle(float deltaTime) {
+    void Idle(float deltaTime) {
 		Vector2 userDirection = mk_inputParser.GetDirection();
 
 		if(userDirection.x != 0f){
@@ -84,7 +85,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void DampenSpeed(float deltaTime) {
-        kCharacter.movementState.DampenLateral(0.05f, deltaTime);
+        kCharacter.movementState.DampenLateral(groundDamping, deltaTime);
         kCharacter.movementState.AccelerateLateral(Vector2.zero, groundDeceleration, deltaTime);
     }
 
@@ -94,9 +95,6 @@ public class PlayerController : MonoBehaviour {
 
 		if(userDirection.x == 0f){
 			kCharacter.kAnimation.CrossFade("Idle");
-			if(ms.lateralSpeed > maxGroundDecelStartSpeed) {
-				//ms.OverrideLateralSpeed(maxGroundDecelStartSpeed);
-			}
 			ChangePlayerState(Idle, State.Idle);
 			return;
 		}
@@ -137,8 +135,9 @@ public class PlayerController : MonoBehaviour {
 			ms.OverrideVerticalSpeed(-fastFallSpeed);
 		}
 
-        if (mk_inputParser.shift.pressed)
+        if (mk_inputParser.shift.pressed && canDash)
         {
+            canDash = false;
             StartDash();
         }
 
@@ -178,19 +177,25 @@ public class PlayerController : MonoBehaviour {
 	void OnControllerColliderHit(ControllerColliderHit hitInfo) {
 		switch(state){
 			case State.InAir:
-			if(hitInfo.normal.y > 0.707f) {
-				if(kCharacter.movementState.lateralSpeed > 4f){
-					// TODO: less classes that can control kAnimator.
-					kCharacter.kAnimation.Play("Land2Run");
-					kCharacter.kAnimation.CrossFade("Run");
-					ChangePlayerState(Running, State.Running);
-				}
-				else{
-					kCharacter.kAnimation.Play("Land2Idle");
-					kCharacter.kAnimation.CrossFade("Idle");
-					ChangePlayerState(Idle, State.Idle);
-				}
-			}
+                if (hitInfo.normal.y > 0.707f)
+                {
+                    // Reset things that happen when you land here
+                    canDash = true;
+
+                    if (kCharacter.movementState.lateralSpeed > 4f)
+                    {
+                        // TODO: less classes that can control kAnimator.
+                        kCharacter.kAnimation.Play("Land2Run");
+                        kCharacter.kAnimation.CrossFade("Run");
+                        ChangePlayerState(Running, State.Running);
+                    }
+                    else
+                    {
+                        kCharacter.kAnimation.Play("Land2Idle");
+                        kCharacter.kAnimation.CrossFade("Idle");
+                        ChangePlayerState(Idle, State.Idle);
+                    }
+                }
 			break;
 		}
 	}
