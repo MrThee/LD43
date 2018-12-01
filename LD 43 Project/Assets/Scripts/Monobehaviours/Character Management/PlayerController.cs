@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour {
 
 		kCharacter.movementState.AccelerateLateral(Vector2.zero, groundDeceleration, deltaTime);
 		float latX = kCharacter.movementState.lateralVelocity.x;
-		if(latX != 0f){
+		if(latX != 0f) {
 			kCharacter.TurnTowards(Mathf.Sign(latX) * Vector3.right);
 		}
 	}

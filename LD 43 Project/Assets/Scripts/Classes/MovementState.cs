@@ -13,6 +13,8 @@ public class MovementState {
 
 	public float verticalSpeed {get; private set;}
 
+	private float m_clingSpeed;
+
 	// Handy cached fields
 	// Populated after currentTerrainNav
 	public Vector2 preJumpLateralVelocity {get; private set;}
@@ -30,11 +32,16 @@ public class MovementState {
 		this.lateralVelocity = Vector2.zero;
 		this.gravityMagnitude = MovementState.DefaultGravity;
 		this.currentTerrain = TerrainNav.Ground;
+		this.m_clingSpeed = 40f;
 	}
 
 	public Vector3 CalcTotalVelocity() {
 		Vector2 vertComp = verticalSpeed * Vector2.up;
 		Vector2 total2D = lateralVelocity + vertComp;
+		if(currentTerrain == TerrainNav.Ground) {
+			// Add a cling-speed component.
+			total2D += Vector2.down * m_clingSpeed;
+		}
 		return new Vector3(total2D.x, total2D.y); // z will always be 0 w/ this constructor.
 	}
 
