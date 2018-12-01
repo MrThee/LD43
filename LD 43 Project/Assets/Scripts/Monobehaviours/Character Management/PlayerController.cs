@@ -225,7 +225,8 @@ public class PlayerController : MonoBehaviour {
         {
             return -dashSpeed;
         }
-        else if (facingDir > 0) {
+        else if (facingDir > 0)
+        {
             return dashSpeed;
         }
         // just pick right if there's an absolute tie
