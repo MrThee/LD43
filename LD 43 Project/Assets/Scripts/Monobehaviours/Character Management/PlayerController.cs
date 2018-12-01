@@ -197,7 +197,7 @@ public class PlayerController : MonoBehaviour {
 
     void StartDash()
     {
-        kCharacter.movementState.OverrideVerticalSpeed(0f);
+        kCharacter.movementState.OverrideVerticalSpeed(5f);
 
         float dashVelocity = GetDashVelocity();
         kCharacter.movementState.OverrideLateralVelocity(dashVelocity);
