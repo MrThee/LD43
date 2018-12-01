@@ -22,10 +22,14 @@ public class InputParser {
     // Update() callback to buffer the appropriate GetKeyDown/Up inputs.
     public PressedRelease space {get; private set;}
     public PressedRelease down {get; private set;}
+    public PressedRelease left {get; private set;}
+    public PressedRelease right {get; private set;}
 
     public InputParser() {
         this.space = new PressedRelease();
         this.down = new PressedRelease();
+        this.left = new PressedRelease();
+        this.right = new PressedRelease();
     }
 
     public Vector2 GetDirection() {
@@ -68,11 +72,27 @@ public class InputParser {
             // at the same time.)
             down.released = true;
         }
+
+        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)){
+            right.pressed = true;
+        }
+        else if(Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow)){
+            right.released = true;
+        }
+
+        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)){
+            left.pressed = true;
+        }
+        else if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow)){
+            left.released = true;
+        }
     }
 
     // Call from a "FixedUpdate" after all inputs have been read/consumed
     public void ClearInputBuffers() {
         space.Reset();
         down.Reset();
+        right.Reset();
+        left.Reset();
     }
 }

@@ -521,8 +521,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kCharacter: {fileID: 1419257187}
-  maxGroundSpeed: 10
+  maxGroundSpeed: 15
   fastFallSpeed: 16
+  groundAcceleration: 200
+  groundDeceleration: 40
 --- !u!1 &2022012852
 GameObject:
   m_ObjectHideFlags: 0

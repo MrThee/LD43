@@ -85,6 +85,11 @@ public class MovementState {
 		preJumpLateralVelocity = lateralVelocity;
 	}
 
+	public void OverrideLateralSpeed(float newLatSpeed){
+		Vector2 currentLatDir = lateralVelocity.normalized;
+		lateralVelocity = currentLatDir * newLatSpeed;
+	}
+
 	public void AccelerateLateral(Vector2 finalLateralVelocity, float rate, float deltaTime) {
 		lateralVelocity = Vector2.MoveTowards(lateralVelocity, finalLateralVelocity, rate*deltaTime);
 	}

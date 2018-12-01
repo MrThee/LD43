@@ -6,7 +6,10 @@ public class PlayerController : MonoBehaviour {
 
 	public Character kCharacter;
 	public float maxGroundSpeed = 10f;
-	public float fastFallSpeed = 8f;
+	public float maxGroundDecelStartSpeed = 5f;
+	public float fastFallSpeed = 16f;
+	public float groundAcceleration = 80f;
+	public float groundDeceleration = 120f;
 
 	private InputParser mk_inputParser;
 	// Use this for initialization.. TODO: delet this.
@@ -47,13 +50,31 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void DriveCharacterOnGround(float deltaTime) {
-		Vector2 userVelocity = maxGroundSpeed * mk_inputParser.GetDirection();
-		Vector2 latVelocity = Vector2.right * userVelocity.x;
-		kCharacter.movementState.AccelerateLateral(latVelocity, 80f, deltaTime);
+		Vector2 userVelocity = mk_inputParser.GetDirection();
+		MovementState ms = kCharacter.movementState;
+
+		// Run or Slow down?
+		if(userVelocity.x != 0f) {
+			// Run
+			Vector2 latVelocity = maxGroundSpeed * Vector2.right * userVelocity.x;
+			ms.AccelerateLateral(latVelocity, groundAcceleration, deltaTime);
+		}
+		else {
+			// Slow down
+			bool beganThisUpdate = mk_inputParser.left.released || mk_inputParser.right.released;
+			if(beganThisUpdate && ms.lateralSpeed > maxGroundDecelStartSpeed){
+				ms.OverrideLateralSpeed(maxGroundDecelStartSpeed);
+			}
+			else{
+				ms.AccelerateLateral(Vector2.zero, groundDeceleration, deltaTime);
+			}
+		}
+
+		// Jump?
 		if(mk_inputParser.space.pressed && 
-			kCharacter.movementState.currentTerrain == MovementState.TerrainNav.Ground) 
+			ms.currentTerrain == MovementState.TerrainNav.Ground) 
 		{
-			kCharacter.movementState.LaunchForHeight(4f);
+			ms.LaunchForHeight(4f);
 		}
 	}
 
