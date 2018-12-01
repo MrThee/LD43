@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class FollowPlayer : MonoBehaviour {
 
-    public Transform kPlayer;
+    public Transform kFocus;
 
     /// <summary>
     /// Distance from the player to the camera along the direction the camera is facing.
     /// </summary>
-    public float distanceToPlayer;
+    public float distanceToFocus = 15;
 
     /// <summary>
     /// How fast it moves to the desired position.
     /// </summary>
     public float speediness = 0.1f;
+
+    // How far above the player the camera should focus on.
+    public float focusOffset = 3f;
 
 	// Use this for initialization
     void Start () {
@@ -22,7 +25,8 @@ public class FollowPlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        Vector3 desiredPosition = kPlayer.position - distanceToPlayer * transform.forward;
+        Vector3 focusPosition = kFocus.position + focusOffset * kFocus.up;
+        Vector3 desiredPosition = focusPosition - distanceToFocus * transform.forward;
         Vector3 newPosition = Vector3.Lerp(transform.position, desiredPosition, 0.1f);
         transform.position = newPosition;
 	}

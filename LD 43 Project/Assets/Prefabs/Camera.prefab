@@ -157,9 +157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1dccbabe3b7f4bf3824476b67d999e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  kPlayer: {fileID: 0}
-  distanceToPlayer: 15
+  kFocus: {fileID: 0}
+  distanceToFocus: 15
   speediness: 0.05
+  focusOffset: 1.5
 --- !u!124 &124707140674091506
 Behaviour:
   m_ObjectHideFlags: 1
