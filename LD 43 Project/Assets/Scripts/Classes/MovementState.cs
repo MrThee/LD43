@@ -35,10 +35,10 @@ public class MovementState {
 		this.m_clingSpeed = 40f;
 	}
 
-	public Vector3 CalcTotalVelocity() {
+	public Vector3 CalcTotalVelocity(bool excludeClingSpeed=false) {
 		Vector2 vertComp = verticalSpeed * Vector2.up;
 		Vector2 total2D = lateralVelocity + vertComp;
-		if(currentTerrain == TerrainNav.Ground) {
+		if(currentTerrain == TerrainNav.Ground && !excludeClingSpeed) {
 			// Add a cling-speed component.
 			total2D += Vector2.down * m_clingSpeed;
 		}
@@ -80,15 +80,18 @@ public class MovementState {
 	public void LaunchForHeight(float heightDelta) {
 		// 0.5 * mass * velocity ^2 = mass * gravity * height
 		// velocity = sqrt(2*g*h)
-		verticalSpeed = Mathf.Sqrt(heightDelta * gravityMagnitude * 2f);
 		currentTerrain = TerrainNav.Air;
-
+		verticalSpeed = Mathf.Sqrt(heightDelta * gravityMagnitude * 2f);
 		preJumpLateralVelocity = lateralVelocity;
+	}
+
+	public void Launch(float vertSpeed){
+		currentTerrain = TerrainNav.Air;
+		OverrideLateralSpeed(vertSpeed);
 	}
 
 	public void OverrideVerticalSpeed(float newVertSpeed){
 		verticalSpeed = newVertSpeed;
-
 		preJumpLateralVelocity = lateralVelocity;
 	}
 

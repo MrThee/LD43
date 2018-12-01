@@ -49,7 +49,6 @@ public class InputParser {
         if(Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
             total -= Vector2.up;
         }
-        total.Normalize();
         return total;
     }
 
