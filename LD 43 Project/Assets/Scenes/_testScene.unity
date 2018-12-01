@@ -525,7 +525,7 @@ Prefab:
     - target: {fileID: 11100000, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
       propertyPath: m_Animation
       value: 
-      objectReference: {fileID: 7400006, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
+      objectReference: {fileID: 7400008, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
     - target: {fileID: 100002, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
       propertyPath: m_Layer
       value: 0
