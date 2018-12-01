@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public Character kCharacter;
 	public float maxGroundSpeed = 10f;
 	public float maxGroundDecelStartSpeed = 5f;
+	public float maxJumpHeight = 2f;
 	public float fastFallSpeed = 16f;
 	public float groundAcceleration = 80f;
 	public float groundDeceleration = 120f;
@@ -74,7 +75,7 @@ public class PlayerController : MonoBehaviour {
 		if(mk_inputParser.space.pressed && 
 			ms.currentTerrain == MovementState.TerrainNav.Ground) 
 		{
-			ms.LaunchForHeight(4f);
+			ms.LaunchForHeight(maxJumpHeight);
 		}
 	}
 

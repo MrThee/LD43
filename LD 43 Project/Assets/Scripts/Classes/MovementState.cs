@@ -24,7 +24,7 @@ public class MovementState {
 	}
 	public TerrainNav currentTerrain {get; private set;}
 
-	public static float DefaultGravity { get { return 80f; } }
+	public static float DefaultGravity { get { return 40f; } }
 
 	public MovementState () {
 		this.lateralVelocity = Vector2.zero;
