@@ -4,14 +4,28 @@ using UnityEngine;
 
 public class InputParser {
 
+    public class PressedRelease {
+        public bool pressed;
+        public bool released;
+        public PressedRelease() {
+            this.Reset();
+        }
+        public void Reset(){
+            pressed = false;
+            released = false;
+        }
+    }
+
     // buffer variables
     // Input.GetKeyDown can't be reliably sampled from FixedUpdate(),
     // so instead this object's UpdateInputBuffers call should be called from a Monobehaviour's
     // Update() callback to buffer the appropriate GetKeyDown/Up inputs.
-    public bool jumpPressed { get; private set; }
+    public PressedRelease space {get; private set;}
+    public PressedRelease down {get; private set;}
 
     public InputParser() {
-        this.jumpPressed = false;
+        this.space = new PressedRelease();
+        this.down = new PressedRelease();
     }
 
     public Vector2 GetDirection() {
@@ -37,14 +51,28 @@ public class InputParser {
 
     // Call from an owning monobehaviour's "Update"
     public void UpdateInputBuffers(){
+        // Jump
         if(Input.GetKeyDown(KeyCode.Space)) {
-            // Buffer
-            jumpPressed = true;
+            space.pressed = true;
+        }
+        if(Input.GetKeyUp(KeyCode.Space)) {
+            space.released = true;
+        }
+
+        // Fast-fall
+        if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
+            down.pressed = true;
+        }
+        else if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
+            // (Else if prevent user from pressing up/down on 'S' and down/up on 'Up' 
+            // at the same time.)
+            down.released = true;
         }
     }
 
     // Call from a "FixedUpdate" after all inputs have been read/consumed
     public void ClearInputBuffers() {
-        jumpPressed = false;
+        space.Reset();
+        down.Reset();
     }
 }
