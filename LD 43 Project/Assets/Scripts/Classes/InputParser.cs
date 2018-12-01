@@ -70,8 +70,6 @@ public class InputParser {
             space.released = true;
         }
 
-        Debug.Log(shift);
-
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             shift.pressed = true;
