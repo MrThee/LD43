@@ -8,11 +8,49 @@ ModelImporter:
     100004: Cube
     100006: Test_Sphere
     100008: Reference_Head
+    100010: Arm_L
+    100012: Arm_R
+    100014: Armature
+    100016: Body
+    100018: Forearm_L
+    100020: Forearm_R
+    100022: Head
+    100024: Leg_L
+    100026: Leg_R
+    100028: MeleeGrip_L
+    100030: MeleeGrip_R
+    100032: RangedGrip_L
+    100034: RangedGrip_R
+    100036: Root
+    100038: Shoulder_L
+    100040: Shoulder_R
+    100042: Thigh_L
+    100044: Thigh_R
+    100046: Torso
     400000: //RootNode
     400002: Circle
     400004: Cube
     400006: Test_Sphere
     400008: Reference_Head
+    400010: Arm_L
+    400012: Arm_R
+    400014: Armature
+    400016: Body
+    400018: Forearm_L
+    400020: Forearm_R
+    400022: Head
+    400024: Leg_L
+    400026: Leg_R
+    400028: MeleeGrip_L
+    400030: MeleeGrip_R
+    400032: RangedGrip_L
+    400034: RangedGrip_R
+    400036: Root
+    400038: Shoulder_L
+    400040: Shoulder_R
+    400042: Thigh_L
+    400044: Thigh_R
+    400046: Torso
     2100000: No Name
     2300000: //RootNode
     2300002: Circle
@@ -29,8 +67,13 @@ ModelImporter:
     4300004: Test_Sphere
     4300006: Reference_Head
     7400000: Default Take
+    7400002: ArmatureAction
+    7400004: Default
+    7400006: Idle_A
     9500000: //RootNode
     11100000: //RootNode
+    13700000: Circle
+    13700002: Reference_Head
   externalObjects: {}
   materials:
     importMaterials: 1
@@ -57,7 +100,119 @@ ModelImporter:
     animationWrapMode: 0
     extraExposedTransformPaths: []
     extraUserProperties: []
-    clipAnimations: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Default Take
+      takeName: Default Take
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: ArmatureAction
+      takeName: ArmatureAction
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Default
+      takeName: Default
+      firstFrame: 0
+      lastFrame: 1
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Idle_A
+      takeName: Idle_A
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 2
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
     isReadable: 1
   meshes:
     lODScreenPercentages: []
