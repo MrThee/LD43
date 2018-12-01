@@ -6,6 +6,7 @@ public class Character : MonoBehaviour {
 
 	public CharacterController kController;
 	public Animation kAnimation;
+	public Transform kBodyTransform;
 
 	public MovementState movementState;
 
@@ -26,5 +27,13 @@ public class Character : MonoBehaviour {
 		if(hitInfo.normal.y > 0.707f) {
 			movementState.LandVertical();
 		}
+	}
+
+	public void TurnTowards(Vector3 forward) {
+		kBodyTransform.transform.rotation = Quaternion.Lerp(
+			kBodyTransform.transform.rotation,
+			Quaternion.LookRotation(forward),
+			8f * Time.fixedDeltaTime
+		);
 	}
 }

@@ -525,7 +525,7 @@ Prefab:
     - target: {fileID: 11100000, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
       propertyPath: m_Animation
       value: 
-      objectReference: {fileID: 7400008, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
+      objectReference: {fileID: 7400020, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
     - target: {fileID: 100002, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -612,6 +612,14 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100044, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
       propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: e06b1494e4791ac49b599f2d7fb0f6fc, type: 2}
+    - target: {fileID: 11100000, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
+      propertyPath: m_PlayAutomatically
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -872,7 +880,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kController: {fileID: 1419257184}
-  kAnimation: {fileID: 0}
+  kAnimation: {fileID: 2093500800}
+  kBodyTransform: {fileID: 609339893}
 --- !u!114 &1419257188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1116,6 +1125,11 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
+--- !u!111 &2093500800 stripped
+Animation:
+  m_PrefabParentObject: {fileID: 11100000, guid: 219c69608b4a4ad41acf729d52ef3db1,
+    type: 3}
+  m_PrefabInternal: {fileID: 609339892}
 --- !u!1 &2133289030
 GameObject:
   m_ObjectHideFlags: 0
