@@ -39,7 +39,6 @@ public class PlayerController : MonoBehaviour {
 		kCharacter.kAnimation.Play("Idle");
 
         gameStateHandler = GameObject.FindGameObjectWithTag("GameStateHandler").GetComponent<GameStateHandler>();
-        gameStateHandler.state = GameStateHandler.GameState.Cutscene;
 	}
 
 	void Update() {
