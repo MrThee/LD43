@@ -96,11 +96,11 @@ public class Character : MonoBehaviour {
 		}
 	}
 
-	public void TurnTowards(Vector3 forward) {
+	public void TurnTowards(Vector3 forward, float deltaTime) {
 		kBodyTransform.transform.rotation = Quaternion.Lerp(
 			kBodyTransform.transform.rotation,
 			Quaternion.LookRotation(forward),
-			8f * Time.fixedDeltaTime
+			8f * deltaTime
 		);
 	}
 

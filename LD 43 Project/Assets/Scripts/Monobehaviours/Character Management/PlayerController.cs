@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour {
     private GameStateHandler gameStateHandler;
 	private InputParser mk_inputParser;
 	private OnForSeconds mk_fireCooldown;
+	private Vector3 m_intendedFacingDirection; // Never assign Vector3.zero to this.
 
 	public State state { get; private set;}
 	private System.Action<float> m_stateAction;
@@ -39,6 +40,9 @@ public class PlayerController : MonoBehaviour {
 		this.mk_fireCooldown = new OnForSeconds(0.25f);
 		this.state = State.Idle;
 		this.m_stateAction = Idle;
+		// only time we use
+		// planar forward for this field
+		this.m_intendedFacingDirection = kCharacter.planarForward; 
 		kCharacter.kAnimation.Play("Idle");
 
         gameStateHandler = FindObjectOfType<GameStateHandler>();
@@ -60,6 +64,9 @@ public class PlayerController : MonoBehaviour {
 		m_stateAction.Invoke(deltaTime);
 		kCharacter.UpdateState(Time.fixedDeltaTime);
 		mk_fireCooldown.UpdateState(deltaTime);
+		if(m_intendedFacingDirection != Vector3.zero){
+			kCharacter.TurnTowards(m_intendedFacingDirection, deltaTime);
+		}
 
 		// Done with single-frame inputs
 		mk_inputParser.ClearInputBuffers();
@@ -108,7 +115,7 @@ public class PlayerController : MonoBehaviour {
 
 		float latX = kCharacter.movementState.lateralVelocity.x;
 		if(latX != 0f) {
-			kCharacter.TurnTowards(Mathf.Sign(latX) * Vector3.right);
+			m_intendedFacingDirection = latX * Vector3.right;
 		}
 	}
 
@@ -155,7 +162,9 @@ public class PlayerController : MonoBehaviour {
 		// Keep movin'
 		Vector2 latVelocity = maxGroundSpeed * Vector2.right * userDirection.x;
 		ms.AccelerateLateral(latVelocity, groundAcceleration, deltaTime);
-		kCharacter.TurnTowards(Vector3.right * latVelocity.x);
+		if(latVelocity.x != 0f){
+			m_intendedFacingDirection = latVelocity.x * Vector3.right;
+		}
 	}
 
 	void InAir(float deltaTime) {
@@ -204,12 +213,12 @@ public class PlayerController : MonoBehaviour {
 
 		if(userDir.x == 0f){
 			if(ms.lateralVelocity.x != 0f){
-				kCharacter.TurnTowards(Vector3.right * ms.lateralVelocity.x);
+				m_intendedFacingDirection = Vector3.right * ms.lateralVelocity.x;
 			}
 			return; // Do nothing.
 		}
 
-		kCharacter.TurnTowards(Vector3.right * userDir.x);
+		m_intendedFacingDirection = userDir.x * Vector3.right;
 
 		// At this point, we know the player wants to drift in the air laterally.
 		Vector2 oldGroundedLatVelocity = ms.preJumpLateralVelocity;
