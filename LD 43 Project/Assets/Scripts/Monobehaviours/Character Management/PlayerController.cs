@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour {
     public float dashSpeed = 15f;
     public bool canDash = true;
 
+    private GameStateHandler gameStateHandler;
 	private InputParser mk_inputParser;
 
 	public State state { get; private set;}
@@ -36,6 +37,9 @@ public class PlayerController : MonoBehaviour {
 		this.state = State.Idle;
 		this.m_stateAction = Idle;
 		kCharacter.kAnimation.Play("Idle");
+
+        gameStateHandler = GameObject.FindGameObjectWithTag("GameStateHandler").GetComponent<GameStateHandler>();
+        gameStateHandler.state = GameStateHandler.GameState.Cutscene;
 	}
 
 	void Update() {
@@ -59,7 +63,11 @@ public class PlayerController : MonoBehaviour {
 	}
 
     void Idle(float deltaTime) {
-		Vector2 userDirection = mk_inputParser.GetDirection();
+        Vector2 userDirection = Vector2.zero;
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay)
+        {
+            userDirection = mk_inputParser.GetDirection();
+        }
 
 		if(userDirection.x != 0f){
 			kCharacter.kAnimation.CrossFade("Run", 0.1f);
@@ -67,17 +75,20 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 
-        if (mk_inputParser.shift.pressed)
-        {
-            StartDash();
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
+            if (mk_inputParser.shift.pressed)
+            {
+                StartDash();
+            }
+            if (mk_inputParser.space.pressed)
+            {
+                kCharacter.movementState.LaunchForHeight(maxJumpHeight);
+                kCharacter.kAnimation.Play("Jump");
+                kCharacter.kAnimation.PlayQueued("InAir");
+                ChangePlayerState(InAir, State.InAir);
+                return;
+            }
         }
-		if(mk_inputParser.space.pressed) {
-			kCharacter.movementState.LaunchForHeight(maxJumpHeight);
-			kCharacter.kAnimation.Play("Jump");
-			kCharacter.kAnimation.PlayQueued("InAir");
-			ChangePlayerState(InAir, State.InAir);
-			return;
-		}
 
         DampenSpeed(deltaTime);
 
@@ -93,7 +104,10 @@ public class PlayerController : MonoBehaviour {
     }
 
 	void Running(float deltaTime){
-		Vector2 userDirection = mk_inputParser.GetDirection();
+        Vector2 userDirection = Vector2.zero;
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
+            userDirection = mk_inputParser.GetDirection(); 
+        }
 		MovementState ms = kCharacter.movementState;
 
 		if(userDirection.x == 0f){
@@ -125,27 +139,32 @@ public class PlayerController : MonoBehaviour {
 		// This handles short-hops, fast-falls, and aerial drifting.
 		MovementState ms = kCharacter.movementState;
 
-		// Short-hop
-		if(mk_inputParser.space.released && 
-			ms.verticalSpeed > 0f)
-		{
-			ms.OverrideVerticalSpeed(ms.verticalSpeed * 0.5f);
-		}
-		else if(mk_inputParser.down.pressed && 
-			0.3f*fastFallSpeed > ms.verticalSpeed && ms.verticalSpeed > -fastFallSpeed) 
-		{
-			// Fast-fall
-			ms.OverrideVerticalSpeed(-fastFallSpeed);
-		}
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
+            // Short-hop
+            if (mk_inputParser.space.released &&
+                ms.verticalSpeed > 0f)
+            {
+                ms.OverrideVerticalSpeed(ms.verticalSpeed * 0.5f);
+            }
+            else if (mk_inputParser.down.pressed &&
+                0.3f * fastFallSpeed > ms.verticalSpeed && ms.verticalSpeed > -fastFallSpeed)
+            {
+                // Fast-fall
+                ms.OverrideVerticalSpeed(-fastFallSpeed);
+            }
 
-        if (mk_inputParser.shift.pressed && canDash)
-        {
-            canDash = false;
-            StartDash();
+            if (mk_inputParser.shift.pressed && canDash)
+            {
+                canDash = false;
+                StartDash();
+            }
         }
 
-		// Air-drift
-		Vector2 userDir = mk_inputParser.GetDirection();
+        // Air-drift
+        Vector2 userDir = Vector2.zero;
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
+            userDir = mk_inputParser.GetDirection();
+        }
 
 		if(userDir.x == 0f){
 			if(ms.lateralVelocity.x != 0f){
