@@ -36,6 +36,10 @@ public class CutsceneHandler : MonoBehaviour
                 camera.config.distanceToFocus = 2;
             },
             () => {
+                Canvas canvas = FindObjectOfType<Canvas>();
+                canvas.enabled = true;
+            },
+            () => {
                 PlayerController player = FindObjectOfType<PlayerController>();
                 camera.kFocus = player.transform;
                 camera.config = defaultCameraConfig;
