@@ -19,7 +19,8 @@ public class OnForSeconds {
 		this.defaultDuration = defaultDuration;
 		this.overrideDuration = inactiveDurationValue;
 		this.onTimer = 0f;
-		this.activationEventHandler = new WillDid<ActivationEventArgs>();
+		this.activationEventHandler = new WillDid();
+		this.deactivationEventHandler = new WillDid();
 		this.thresholdEventHandler = new WillDid<ThresholdEventArgs>();
 	}
 
@@ -35,42 +36,36 @@ public class OnForSeconds {
 
 
 			if(onTimer > currentDurationSet) {
-				var aeArgs = new ActivationEventArgs{active=false};
-				activationEventHandler.Will.Invoke(aeArgs);
+				deactivationEventHandler.Will.Invoke();
 				active = false;
 				onTimer = 0f;
-				activationEventHandler.Did.Invoke(aeArgs);
+				deactivationEventHandler.Did.Invoke();
 			}
 		}
 	}
 
 	public void ActivateForDefaultDuration() {
 		overrideDuration = inactiveDurationValue;
-		ActivationEventArgs aea = new ActivationEventArgs{active=true};
-		activationEventHandler.Will.Invoke(aea);
+		activationEventHandler.Will.Invoke();
 		active = true;
 		onTimer=0f;
-		activationEventHandler.Did.Invoke(aea);
+		activationEventHandler.Did.Invoke();
 	}
 
 	public void ActivateForDuration(float overrideTime) {
 		overrideDuration = overrideTime;
-		ActivationEventArgs aea = new ActivationEventArgs{active=true};
-		activationEventHandler.Will.Invoke(aea);
+		activationEventHandler.Will.Invoke();
 		active = true;
 		onTimer=0f;
-		activationEventHandler.Did.Invoke(aea);
-	}
-
-	public class ActivationEventArgs {
-		public bool active;
+		activationEventHandler.Did.Invoke();
 	}
 	public class ThresholdEventArgs {
 		public float oldOnTime;
 		public float newOnTime;
 	}
 
-	public WillDid<ActivationEventArgs> activationEventHandler {get; private set;}
+	public WillDid activationEventHandler {get; private set;}
+	public WillDid deactivationEventHandler {get; private set;}
 	public WillDid<ThresholdEventArgs> thresholdEventHandler {get; private set;}
 
 }
