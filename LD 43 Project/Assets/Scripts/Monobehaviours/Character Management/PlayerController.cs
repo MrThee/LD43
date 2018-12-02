@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour {
 	public State state { get; private set;}
 	private System.Action<float> m_stateAction;
 
+    // Health things
+    private int health;
+
 	// Use this for initialization.. TODO: delet this.
 	void Start () {
 		this.mk_inputParser = new InputParser();
@@ -231,6 +234,11 @@ public class PlayerController : MonoBehaviour {
         }
         // just pick right if there's an absolute tie
         return dashSpeed;
+    }
+
+    public void TakeDamage(int amount, Vector3 direction) {
+        health -= amount;
+        // Just quickly push the player back a little. Hopefully doesn't break things.
     }
 
 }
