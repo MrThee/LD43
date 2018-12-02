@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1566551335, guid: ab85ac808950aa04ea8320fc273cd8c0, type: 3}
-  m_Name: Animation_2018-12-1_11-50-29
+  m_Name: Mountain1
   m_EditorClassIdentifier: 
   frames:
   - _texture: {fileID: 28840073162168576}
@@ -82,7 +82,7 @@ Sprite:
   m_AtlasName: 
   m_PackingTag: 
   m_RenderDataKey:
-    00000000000000000000000000000000: 0
+    27324b02663a8452084677117ff8b3a6: 213157010230725948
   m_AtlasTags: []
   m_SpriteAtlas: {fileID: 0}
   m_RD:
