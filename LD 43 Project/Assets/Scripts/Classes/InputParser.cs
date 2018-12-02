@@ -5,15 +5,43 @@ using UnityEngine;
 public class InputParser {
 
     public class PressedRelease {
-        public bool pressed;
-        public bool released;
-        public PressedRelease() {
+        public bool pressed {get; private set;}
+        public bool released {get; private set;}
+        private readonly KeyCode key1;
+        private readonly bool has2ndKey;
+        private readonly KeyCode key2;
+        public PressedRelease(KeyCode key) {
+            this.key1 = key;
+            this.has2ndKey = false;
+            this.key2 = KeyCode.LeftWindows; // meme-key
             this.Reset();
         }
+
+        public PressedRelease(KeyCode key1, KeyCode key2){
+            this.key1 = key1;
+            this.key2 = key2;
+            this.has2ndKey = true;
+            this.Reset();
+        }
+
+        public void Buffer(){
+            if( Input.GetKeyDown(this.key1) || 
+                (has2ndKey && Input.GetKeyDown(this.key2)) )
+            {
+                pressed = true;
+            }
+            else if(Input.GetKeyUp(this.key1) || 
+                (has2ndKey && Input.GetKeyUp(this.key2)) )
+            {
+                released = true;
+            }
+        }
+
         public void Reset(){
             pressed = false;
             released = false;
         }
+
         public override string ToString()
         {
             return string.Format("pressed = {0}, released = {1}", pressed, released);
@@ -32,12 +60,13 @@ public class InputParser {
     public PressedRelease right {get; private set;}
 
     public InputParser() {
-        this.space = new PressedRelease();
-        this.shift = new PressedRelease();
+        this.space = new PressedRelease(KeyCode.Space);
+        this.shift = new PressedRelease(KeyCode.LeftShift);
 
-        this.down = new PressedRelease();
-        this.left = new PressedRelease();
-        this.right = new PressedRelease();
+        this.down = new PressedRelease(KeyCode.S, KeyCode.DownArrow);
+        this.left = new PressedRelease(KeyCode.A, KeyCode.LeftArrow);
+        this.right = new PressedRelease(KeyCode.D, KeyCode.RightArrow);
+
     }
 
     public Vector2 GetDirection() {
@@ -63,45 +92,16 @@ public class InputParser {
     // Call from an owning monobehaviour's "Update"
     public void UpdateInputBuffers(){
         // Jump
-        if(Input.GetKeyDown(KeyCode.Space)) {
-            space.pressed = true;
-        }
-        if(Input.GetKeyUp(KeyCode.Space)) {
-            space.released = true;
-        }
+        space.Buffer();
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            shift.pressed = true;
-        }
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            shift.released = true;
-        }
+        // Dash
+        shift.Buffer();
 
         // Fast-fall
-        if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
-            down.pressed = true;
-        }
-        else if(Input.GetKeyUp(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)){
-            // (Else if prevent user from pressing up/down on 'S' and down/up on 'Up' 
-            // at the same time.)
-            down.released = true;
-        }
+        down.Buffer();
 
-        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)){
-            right.pressed = true;
-        }
-        else if(Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow)){
-            right.released = true;
-        }
-
-        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)){
-            left.pressed = true;
-        }
-        else if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow)){
-            left.released = true;
-        }
+        right.Buffer();
+        left.Buffer();
     }
 
     // Call from a "FixedUpdate" after all inputs have been read/consumed

@@ -8,7 +8,8 @@ public class ValueForSeconds<T> {
 	public bool active { get {return driver.active; } }
 	public float currentDurationSet { get { return driver.currentDurationSet; } }
 	public float onTimer { get { return driver.onTimer; } }
-	public WillDid<OnForSeconds.ActivationEventArgs> activationEventHandler {get { return driver.activationEventHandler; } }
+	public WillDid activationEventHandler {get { return driver.activationEventHandler; } }
+	public WillDid deactivationEventHandler {get { return driver.deactivationEventHandler; } }
 	public WillDid<OnForSeconds.ThresholdEventArgs> thresholdEventHandler {get { return driver.thresholdEventHandler; } }
 
 	private readonly T inactiveValue;
@@ -21,13 +22,11 @@ public class ValueForSeconds<T> {
 		this.output = lowValue;
 		this.valueActivatedHandler = new WillDid<T>();
 
-		driver.activationEventHandler.Did.AddCallback(DriverDidActivate);
+		driver.deactivationEventHandler.Did.AddCallback(DriverDidDeactivate);
 	}
 
-	void DriverDidActivate(OnForSeconds.ActivationEventArgs args){
-		if(args.active == false){
-			output = inactiveValue;
-		}
+	void DriverDidDeactivate(){
+		output = inactiveValue;
 	}
 
 	public void UpdateState(float deltaTime) {

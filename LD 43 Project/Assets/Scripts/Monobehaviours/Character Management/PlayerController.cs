@@ -7,10 +7,12 @@ public class PlayerController : MonoBehaviour {
 	public enum State {
 		Idle,
 		InAir,
-		Running
+		Running,
+		Dash
 	}
 
 	public Character kCharacter;
+	[Header("Movement")]
 	public float maxGroundSpeed = 10f;
 	public float maxGroundDecelStartSpeed = 5f;
 	public float maxJumpHeight = 2f;
@@ -22,6 +24,9 @@ public class PlayerController : MonoBehaviour {
     public float dashSpeed = 15f;
     public bool canDash = true;
 
+	[Header("Combat!")]
+	public float bulletCooldown = 0.25f;
+
 	private InputParser mk_inputParser;
 
 	public State state { get; private set;}
@@ -29,6 +34,7 @@ public class PlayerController : MonoBehaviour {
 
     // Health things
     private int health;
+	private OnForSeconds mk_fireCooldownSM;
 
 	// Use this for initialization.. TODO: delet this.
 	void Start () {
@@ -36,6 +42,7 @@ public class PlayerController : MonoBehaviour {
 		this.state = State.Idle;
 		this.m_stateAction = Idle;
 		kCharacter.kAnimation.Play("Idle");
+		this.mk_fireCooldownSM = new OnForSeconds(bulletCooldown);
 	}
 
 	void Update() {
@@ -53,6 +60,7 @@ public class PlayerController : MonoBehaviour {
 
 		m_stateAction.Invoke(deltaTime);
 		kCharacter.UpdateState(Time.fixedDeltaTime);
+		mk_fireCooldownSM.UpdateState(deltaTime);
 
 		// Done with single-frame inputs
 		mk_inputParser.ClearInputBuffers();
