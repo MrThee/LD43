@@ -104,6 +104,10 @@ public class Character : MonoBehaviour {
 		);
 	}
 
+	public void Face(Vector3 forward){
+		kBodyTransform.rotation = Quaternion.LookRotation(forward);
+	}
+
     /// <summary>
     /// Returns what direction, left or right the player is facing.
     /// </summary>
@@ -113,4 +117,10 @@ public class Character : MonoBehaviour {
             return kBodyTransform.transform.forward.x;
         }
     }
+
+	public Vector3 planarForward {
+		get {
+			return Vector3.right * Mathf.Sign(FacingDir);
+		}
+	}
 }

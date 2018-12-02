@@ -215,6 +215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4548123832592180}
   - component: {fileID: 111760079627574662}
+  - component: {fileID: 114656851460805154}
   m_Layer: 0
   m_Name: body
   m_TagString: Untagged
@@ -327,7 +328,6 @@ GameObject:
   - component: {fileID: 114048461273926266}
   - component: {fileID: 114769816509996748}
   - component: {fileID: 143311701123298604}
-  - component: {fileID: 114203769503763856}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -428,6 +428,50 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1915434729077066
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4833319529847742}
+  m_Layer: 0
+  m_Name: Gun Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1948514907095102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4065173162076482}
+  - component: {fileID: 114359720816726340}
+  m_Layer: 0
+  m_Name: harnesses
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4065173162076482
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1948514907095102}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4376485855291352}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4073298501862428
 Transform:
   m_ObjectHideFlags: 1
@@ -515,10 +559,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1648879431590860}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.8, y: 2, z: 0}
+  m_LocalPosition: {x: -2, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4548123832592180}
+  - {fileID: 4065173162076482}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -730,7 +775,8 @@ Transform:
   m_LocalRotation: {x: -0.000014328189, y: 0.70736617, z: 0.000014386137, w: 0.7068473}
   m_LocalPosition: {x: -0.21555908, y: -0.0017406829, z: 0.00089645386}
   m_LocalScale: {x: 0.9999998, y: 1, z: 0.9999998}
-  m_Children: []
+  m_Children:
+  - {fileID: 4833319529847742}
   m_Father: {fileID: 4759849428907604}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0.0040716366, y: 90.04204, z: 0.00000768292}
@@ -749,6 +795,19 @@ Transform:
   m_Father: {fileID: 4508227582272236}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -5.720277, y: -9.240965, z: 69.78141}
+--- !u!4 &4833319529847742
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1915434729077066}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4785442876557518}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!4 &4867583589550568
 Transform:
   m_ObjectHideFlags: 1
@@ -934,6 +993,7 @@ Animation:
   - {fileID: 7400018, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
   - {fileID: 7400026, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
   - {fileID: 7400028, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
+  - {fileID: 7400030, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -950,6 +1010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kCharacter: {fileID: 114769816509996748}
+  kInventoryHarness: {fileID: 114359720816726340}
   maxGroundSpeed: 8
   maxGroundDecelStartSpeed: 3
   maxJumpHeight: 3
@@ -959,12 +1020,25 @@ MonoBehaviour:
   groundDamping: 0.05
   dashSpeed: 15
   canDash: 1
---- !u!114 &114203769503763856
+--- !u!114 &114359720816726340
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1648879431590860}
+  m_GameObject: {fileID: 1948514907095102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691439efddb7229449ad6aeb0a724640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gunContainer: {fileID: 4833319529847742}
+  testGun1: {fileID: 114380802696738240, guid: e66897a4609c8cf458e6d598df4ecb4a, type: 2}
+--- !u!114 &114656851460805154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1504915919899766}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ef3f45d5ced66b47a47fe7bdc7abcc8, type: 3}

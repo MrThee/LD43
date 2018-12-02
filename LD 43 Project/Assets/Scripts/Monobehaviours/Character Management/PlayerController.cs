@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	public Character kCharacter;
+	public InventoryHarness kInventoryHarness;
 	public float maxGroundSpeed = 10f;
 	public float maxGroundDecelStartSpeed = 5f;
 	public float maxJumpHeight = 2f;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour {
 
     private GameStateHandler gameStateHandler;
 	private InputParser mk_inputParser;
+	private OnForSeconds mk_fireCooldown;
 
 	public State state { get; private set;}
 	private System.Action<float> m_stateAction;
@@ -34,6 +36,7 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization.. TODO: delet this.
 	void Start () {
 		this.mk_inputParser = new InputParser();
+		this.mk_fireCooldown = new OnForSeconds(0.25f);
 		this.state = State.Idle;
 		this.m_stateAction = Idle;
 		kCharacter.kAnimation.Play("Idle");
@@ -56,6 +59,7 @@ public class PlayerController : MonoBehaviour {
 
 		m_stateAction.Invoke(deltaTime);
 		kCharacter.UpdateState(Time.fixedDeltaTime);
+		mk_fireCooldown.UpdateState(deltaTime);
 
 		// Done with single-frame inputs
 		mk_inputParser.ClearInputBuffers();
@@ -88,6 +92,17 @@ public class PlayerController : MonoBehaviour {
                 return;
             }
         }
+
+		if(kInventoryHarness.currentGun) {
+			if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+				// FIRE!
+				kCharacter.kAnimation.Stop();
+				kCharacter.kAnimation.Play("FireFromIdle");
+				kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
+				kInventoryHarness.currentGun.Launch(bulletSpawnPoint, kCharacter.planarForward);
+				mk_fireCooldown.ActivateForDefaultDuration();
+			}
+		}
 
         DampenSpeed(deltaTime);
 
@@ -127,6 +142,16 @@ public class PlayerController : MonoBehaviour {
             StartDash();
         }
 
+		if(kInventoryHarness.currentGun){
+			if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+				// FIRE!
+				kCharacter.kAnimation.Play("FireFromRun");
+				// kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
+				kInventoryHarness.currentGun.Launch(bulletSpawnPoint, kCharacter.planarForward);
+				mk_fireCooldown.ActivateForDefaultDuration();
+			}
+		}
+
 		// Keep movin'
 		Vector2 latVelocity = maxGroundSpeed * Vector2.right * userDirection.x;
 		ms.AccelerateLateral(latVelocity, groundAcceleration, deltaTime);
@@ -158,6 +183,18 @@ public class PlayerController : MonoBehaviour {
                 StartDash();
             }
         }
+
+		// !GUN!
+		if(kInventoryHarness.currentGun){
+			if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+				// FIRE!
+				kCharacter.kAnimation.Stop();
+				kCharacter.kAnimation.Play("FireFromAir");
+				kCharacter.kAnimation.CrossFadeQueued("InAir", 0.1f);
+				kInventoryHarness.currentGun.Launch(bulletSpawnPoint, kCharacter.planarForward);
+				mk_fireCooldown.ActivateForDefaultDuration();
+			}
+		}
 
         // Air-drift
         Vector2 userDir = Vector2.zero;
@@ -258,5 +295,13 @@ public class PlayerController : MonoBehaviour {
         health -= amount;
         // Just quickly push the player back a little. Hopefully doesn't break things.
     }
+
+	Vector3 bulletSpawnPoint {
+		get {
+			return 	transform.position + 
+					Vector3.up * 0.5f + 
+					0.5f * kCharacter.planarForward;
+		}
+	}
 
 }
