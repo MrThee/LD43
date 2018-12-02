@@ -7,12 +7,10 @@ public class PlayerController : MonoBehaviour {
 	public enum State {
 		Idle,
 		InAir,
-		Running,
-		Dash
+		Running
 	}
 
 	public Character kCharacter;
-	[Header("Movement")]
 	public float maxGroundSpeed = 10f;
 	public float maxGroundDecelStartSpeed = 5f;
 	public float maxJumpHeight = 2f;
@@ -24,9 +22,7 @@ public class PlayerController : MonoBehaviour {
     public float dashSpeed = 15f;
     public bool canDash = true;
 
-	[Header("Combat!")]
-	public float bulletCooldown = 0.25f;
-
+    private GameStateHandler gameStateHandler;
 	private InputParser mk_inputParser;
 
 	public State state { get; private set;}
@@ -34,7 +30,6 @@ public class PlayerController : MonoBehaviour {
 
     // Health things
     private int health;
-	private OnForSeconds mk_fireCooldownSM;
 
 	// Use this for initialization.. TODO: delet this.
 	void Start () {
@@ -42,7 +37,9 @@ public class PlayerController : MonoBehaviour {
 		this.state = State.Idle;
 		this.m_stateAction = Idle;
 		kCharacter.kAnimation.Play("Idle");
-		this.mk_fireCooldownSM = new OnForSeconds(bulletCooldown);
+
+        gameStateHandler = GameObject.FindGameObjectWithTag("GameStateHandler").GetComponent<GameStateHandler>();
+        gameStateHandler.state = GameStateHandler.GameState.Cutscene;
 	}
 
 	void Update() {
@@ -60,14 +57,17 @@ public class PlayerController : MonoBehaviour {
 
 		m_stateAction.Invoke(deltaTime);
 		kCharacter.UpdateState(Time.fixedDeltaTime);
-		mk_fireCooldownSM.UpdateState(deltaTime);
 
 		// Done with single-frame inputs
 		mk_inputParser.ClearInputBuffers();
 	}
 
     void Idle(float deltaTime) {
-		Vector2 userDirection = mk_inputParser.GetDirection();
+        Vector2 userDirection = Vector2.zero;
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay)
+        {
+            userDirection = mk_inputParser.GetDirection();
+        }
 
 		if(userDirection.x != 0f){
 			kCharacter.kAnimation.CrossFade("Run", 0.1f);
@@ -75,17 +75,20 @@ public class PlayerController : MonoBehaviour {
 			return;
 		}
 
-        if (mk_inputParser.shift.pressed)
-        {
-            StartDash();
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
+            if (mk_inputParser.shift.pressed)
+            {
+                StartDash();
+            }
+            if (mk_inputParser.space.pressed)
+            {
+                kCharacter.movementState.LaunchForHeight(maxJumpHeight);
+                kCharacter.kAnimation.Play("Jump");
+                kCharacter.kAnimation.PlayQueued("InAir");
+                ChangePlayerState(InAir, State.InAir);
+                return;
+            }
         }
-		if(mk_inputParser.space.pressed) {
-			kCharacter.movementState.LaunchForHeight(maxJumpHeight);
-			kCharacter.kAnimation.Play("Jump");
-			kCharacter.kAnimation.PlayQueued("InAir");
-			ChangePlayerState(InAir, State.InAir);
-			return;
-		}
 
         DampenSpeed(deltaTime);
 
@@ -101,7 +104,10 @@ public class PlayerController : MonoBehaviour {
     }
 
 	void Running(float deltaTime){
-		Vector2 userDirection = mk_inputParser.GetDirection();
+        Vector2 userDirection = Vector2.zero;
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
+            userDirection = mk_inputParser.GetDirection(); 
+        }
 		MovementState ms = kCharacter.movementState;
 
 		if(userDirection.x == 0f){
@@ -133,27 +139,32 @@ public class PlayerController : MonoBehaviour {
 		// This handles short-hops, fast-falls, and aerial drifting.
 		MovementState ms = kCharacter.movementState;
 
-		// Short-hop
-		if(mk_inputParser.space.released && 
-			ms.verticalSpeed > 0f)
-		{
-			ms.OverrideVerticalSpeed(ms.verticalSpeed * 0.5f);
-		}
-		else if(mk_inputParser.down.pressed && 
-			0.3f*fastFallSpeed > ms.verticalSpeed && ms.verticalSpeed > -fastFallSpeed) 
-		{
-			// Fast-fall
-			ms.OverrideVerticalSpeed(-fastFallSpeed);
-		}
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
+            // Short-hop
+            if (mk_inputParser.space.released &&
+                ms.verticalSpeed > 0f)
+            {
+                ms.OverrideVerticalSpeed(ms.verticalSpeed * 0.5f);
+            }
+            else if (mk_inputParser.down.pressed &&
+                0.3f * fastFallSpeed > ms.verticalSpeed && ms.verticalSpeed > -fastFallSpeed)
+            {
+                // Fast-fall
+                ms.OverrideVerticalSpeed(-fastFallSpeed);
+            }
 
-        if (mk_inputParser.shift.pressed && canDash)
-        {
-            canDash = false;
-            StartDash();
+            if (mk_inputParser.shift.pressed && canDash)
+            {
+                canDash = false;
+                StartDash();
+            }
         }
 
-		// Air-drift
-		Vector2 userDir = mk_inputParser.GetDirection();
+        // Air-drift
+        Vector2 userDir = Vector2.zero;
+        if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
+            userDir = mk_inputParser.GetDirection();
+        }
 
 		if(userDir.x == 0f){
 			if(ms.lateralVelocity.x != 0f){
