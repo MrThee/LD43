@@ -9,5 +9,5 @@ public class GameStateHandler : MonoBehaviour {
         Cutscene,
     }
 
-    public GameState state = GameState.Cutscene;
+    public GameState state = GameState.GamePlay;
 }
