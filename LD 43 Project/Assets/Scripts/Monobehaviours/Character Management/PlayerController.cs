@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour {
 
 	public Character kCharacter;
 	public InventoryHarness kInventoryHarness;
+	[Header("Movement")]
 	public float maxGroundSpeed = 10f;
 	public float maxGroundDecelStartSpeed = 5f;
 	public float maxJumpHeight = 2f;
@@ -22,6 +23,9 @@ public class PlayerController : MonoBehaviour {
 
     public float dashSpeed = 15f;
     public bool canDash = true;
+
+	[Header("Combat")]
+	public Transform firePoint;
 
     private GameStateHandler gameStateHandler;
 	private InputParser mk_inputParser;
@@ -62,7 +66,18 @@ public class PlayerController : MonoBehaviour {
 		float deltaTime = Time.fixedDeltaTime;
 
 		m_stateAction.Invoke(deltaTime);
+
+		MovementState.TerrainNav oldTerrain = kCharacter.movementState.currentTerrain;
 		kCharacter.UpdateState(Time.fixedDeltaTime);
+		MovementState.TerrainNav newTerrain = kCharacter.movementState.currentTerrain;
+		if(	oldTerrain == MovementState.TerrainNav.Ground && 
+			newTerrain == MovementState.TerrainNav.Air)
+		{
+			kCharacter.kAnimation.Play("Jump");
+			kCharacter.kAnimation.PlayQueued("InAir");
+			ChangePlayerState(InAir, State.InAir);
+		}
+
 		mk_fireCooldown.UpdateState(deltaTime);
 		if(m_intendedFacingDirection != Vector3.zero){
 			kCharacter.TurnTowards(m_intendedFacingDirection, deltaTime);
@@ -106,7 +121,7 @@ public class PlayerController : MonoBehaviour {
 				kCharacter.kAnimation.Stop();
 				kCharacter.kAnimation.Play("FireFromIdle");
 				kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
-				kInventoryHarness.currentGun.Launch(bulletSpawnPoint, kCharacter.planarForward);
+				kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
 				mk_fireCooldown.ActivateForDefaultDuration();
 			}
 		}
@@ -154,7 +169,7 @@ public class PlayerController : MonoBehaviour {
 				// FIRE!
 				kCharacter.kAnimation.Play("FireFromRun");
 				// kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
-				kInventoryHarness.currentGun.Launch(bulletSpawnPoint, kCharacter.planarForward);
+				kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
 				mk_fireCooldown.ActivateForDefaultDuration();
 			}
 		}
@@ -200,7 +215,7 @@ public class PlayerController : MonoBehaviour {
 				kCharacter.kAnimation.Stop();
 				kCharacter.kAnimation.Play("FireFromAir");
 				kCharacter.kAnimation.CrossFadeQueued("InAir", 0.1f);
-				kInventoryHarness.currentGun.Launch(bulletSpawnPoint, kCharacter.planarForward);
+				kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
 				mk_fireCooldown.ActivateForDefaultDuration();
 			}
 		}
@@ -304,13 +319,5 @@ public class PlayerController : MonoBehaviour {
         health -= amount;
         // Just quickly push the player back a little. Hopefully doesn't break things.
     }
-
-	Vector3 bulletSpawnPoint {
-		get {
-			return 	transform.position + 
-					Vector3.up * 0.5f + 
-					0.5f * kCharacter.planarForward;
-		}
-	}
 
 }

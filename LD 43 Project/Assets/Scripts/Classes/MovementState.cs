@@ -87,7 +87,7 @@ public class MovementState {
 
 	public void Launch(float vertSpeed){
 		currentTerrain = TerrainNav.Air;
-		OverrideLateralSpeed(vertSpeed);
+		OverrideVerticalSpeed(vertSpeed);
 	}
 
 	public void OverrideVerticalSpeed(float newVertSpeed){

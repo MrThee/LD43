@@ -32,9 +32,13 @@ public class Character : MonoBehaviour {
 			else {
 				// EVICT!
 				// By putting them into an aerial state.
+				float horzComp = Mathf.Sign(tangentVelocity.x) 
+					* Mathf.Max(4f, Mathf.Abs(tangentVelocity.x));
 				float vertComp = Mathf.Max(4f, tangentVelocity.y);
+				movementState.OverrideLateralSpeed(horzComp);
 				movementState.Launch(vertComp);
-				kController.Move(deltaTime * movementState.CalcTotalVelocity());
+				Vector3 delta = deltaTime * movementState.CalcTotalVelocity();
+				kController.Move(delta);
 			}
 		}
 		else {
