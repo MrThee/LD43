@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour {
 
+	public LifeTimer kTrail;
+
 	[System.Serializable]
 	public class Params {
 		public float lifeTime;
@@ -17,7 +19,7 @@ public class Projectile : MonoBehaviour {
 
 	public void Kickoff(Params projParams, Vector3 origin, Vector3 direction){
 		this.mk_lifeTimer = new OnForSeconds(projParams.lifeTime);
-		this.mk_lifeTimer.deactivationEventHandler.Did.AddCallback(this.OnLifeTimerExpired);
+		this.mk_lifeTimer.deactivationEventHandler.Did.AddCallback(this.Destroy);
 		this.transform.position = origin;
 		this.velocity = direction * projParams.speed;
 
@@ -28,12 +30,26 @@ public class Projectile : MonoBehaviour {
 		float deltaTime = Time.fixedDeltaTime;
 		mk_lifeTimer.UpdateState(deltaTime);
 
-		// Move it
-		transform.position += velocity * deltaTime;
+		Vector3 movementDelta = velocity * deltaTime;
+		float deltaLength = movementDelta.magnitude;
+		int lm = -1;
+		bool hit = Physics.Raycast(transform.position, velocity, deltaLength, lm);
+
+		if(hit) {
+			Destroy();
+			return;
+		}
+		else {
+			// Move it
+			transform.position += velocity * deltaTime;
+		}
 	}
 
-	// ya boi ain't got time for poolin' this.
-	void OnLifeTimerExpired(){
+	void Destroy() {
+		if(kTrail){
+			kTrail.transform.SetParent(null);
+			kTrail.enabled = true;
+		}
 		Destroy(this.gameObject);
 	}
 }
