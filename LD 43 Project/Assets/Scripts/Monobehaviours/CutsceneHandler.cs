@@ -6,7 +6,7 @@ using UnityEngine;
 public class CutsceneHandler : MonoBehaviour
 {
 
-    private int actionIndex = -1;
+    private int actionIndex = 0;
     private List<Action> cutsceneActions;
     private GameStateHandler gameStateHandler;
 
@@ -40,10 +40,9 @@ public class CutsceneHandler : MonoBehaviour
                 canvas.enabled = true;
             },
             () => {
-                PlayerController player = FindObjectOfType<PlayerController>();
-                camera.kFocus = player.transform;
-                camera.config = defaultCameraConfig;
-            }
+                Canvas canvas = FindObjectOfType<Canvas>();
+                canvas.enabled = false;
+            },
         };
     }
 
@@ -55,11 +54,27 @@ public class CutsceneHandler : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            actionIndex++;
-            actionIndex %= cutsceneActions.Count;
 
             Action action = cutsceneActions[actionIndex];
             action.Invoke();
+
+            actionIndex++;
+            if (actionIndex >= cutsceneActions.Count)
+            {
+                EndCutscene();
+                return;
+            }
         }
+    }
+
+    private void EndCutscene() {
+        ResetCamera();
+        gameStateHandler.state = GameStateHandler.GameState.GamePlay;
+    }
+
+    private void ResetCamera() {
+        PlayerController player = FindObjectOfType<PlayerController>();
+        camera.kFocus = player.transform;
+        camera.config = defaultCameraConfig;
     }
 }
