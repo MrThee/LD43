@@ -113,6 +113,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &303622388
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 303622389}
+  - component: {fileID: 303622390}
+  m_Layer: 0
+  m_Name: MountainGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &303622389
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 303622388}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -16.2, z: 52.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 885893840}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &303622390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 303622388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 304dc774fa5b24ebfb904e74e80b2b20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mountains:
+  - {fileID: 4708045291172774, guid: 3e7942a246540431db200c404c1e52dc, type: 2}
+  - {fileID: 4587783374467862, guid: 5cf34743f9c354aedbf7f38a35541b04, type: 2}
+  spawnRange: {x: 30, y: 2, z: 4}
+  numMountains: 5
 --- !u!1 &824445303
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +199,11 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!4 &885893840 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4923447575285858, guid: 119237b4b8cba4e8487b3f821ed15719,
+    type: 2}
+  m_PrefabInternal: {fileID: 1268081895}
 --- !u!1 &898713510
 GameObject:
   m_ObjectHideFlags: 0
