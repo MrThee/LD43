@@ -58,6 +58,7 @@ public class InputParser {
     public PressedRelease down {get; private set;}
     public PressedRelease left {get; private set;}
     public PressedRelease right {get; private set;}
+    public PressedRelease mouse0 { get; private set;}
 
     public InputParser() {
         this.space = new PressedRelease(KeyCode.Space);
@@ -66,7 +67,7 @@ public class InputParser {
         this.down = new PressedRelease(KeyCode.S, KeyCode.DownArrow);
         this.left = new PressedRelease(KeyCode.A, KeyCode.LeftArrow);
         this.right = new PressedRelease(KeyCode.D, KeyCode.RightArrow);
-
+        this.mouse0 = new PressedRelease(KeyCode.Mouse0);
     }
 
     public Vector2 GetDirection() {
@@ -102,6 +103,7 @@ public class InputParser {
 
         right.Buffer();
         left.Buffer();
+        mouse0.Buffer();
     }
 
     // Call from a "FixedUpdate" after all inputs have been read/consumed
@@ -111,5 +113,6 @@ public class InputParser {
         down.Reset();
         right.Reset();
         left.Reset();
+        mouse0.Reset();
     }
 }

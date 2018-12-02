@@ -27,6 +27,9 @@ public class Projectile : MonoBehaviour {
 	void FixedUpdate(){
 		float deltaTime = Time.fixedDeltaTime;
 		mk_lifeTimer.UpdateState(deltaTime);
+
+		// Move it
+		transform.position += velocity * deltaTime;
 	}
 
 	// ya boi ain't got time for poolin' this.

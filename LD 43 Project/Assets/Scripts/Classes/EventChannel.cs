@@ -33,6 +33,10 @@ public class EventChannel<T> : IEventChannel {
     private event System.Action<T> EventHandler;
     private EventChannel VoidChannel;
 
+    public EventChannel() {
+        this.VoidChannel = new EventChannel();
+    }
+
     public void AddCallback(System.Action<T> callback){
         if(EventHandler == null){
             EventHandler += callback;
