@@ -127,6 +127,9 @@ public class Character : MonoBehaviour {
 	}
 
 	public void TurnTowards(Vector3 forward, float deltaTime) {
+		if(forward.z == 0f){
+			forward = new Vector3(forward.x, forward.y, -0.001f).normalized;
+		}
 		kBodyTransform.transform.rotation = Quaternion.Lerp(
 			kBodyTransform.transform.rotation,
 			Quaternion.LookRotation(forward),
