@@ -1043,6 +1043,7 @@ Animation:
   - {fileID: 7400026, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
   - {fileID: 7400028, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
   - {fileID: 7400030, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
+  - {fileID: 7400032, guid: 219c69608b4a4ad41acf729d52ef3db1, type: 3}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -1124,6 +1125,7 @@ MonoBehaviour:
     mouth: {fileID: 0}
     nose: {fileID: 0}
     eyewear: {fileID: 0}
+  myHead: {fileID: 0}
 --- !u!114 &114656851460805154
 MonoBehaviour:
   m_ObjectHideFlags: 1

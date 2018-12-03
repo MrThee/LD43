@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// [System.Serializable]
+[System.Serializable]
 public class MovementState {
 
 	// Infrequently-changing fields
@@ -23,7 +23,8 @@ public class MovementState {
 	public enum TerrainNav {
 		Ground,
 		Wall,
-		Air
+		Air,
+		Zeroed
 	}
 	public TerrainNav currentTerrain {get; private set;}
 
@@ -50,6 +51,7 @@ public class MovementState {
 		switch(currentTerrain) {
 			default:
 			case TerrainNav.Ground:
+			case TerrainNav.Zeroed:
 			break;
 
 			case TerrainNav.Wall:
@@ -106,4 +108,10 @@ public class MovementState {
     {
         lateralVelocity = (1 - rate) * lateralVelocity;
     }
+
+	public void ZeroOut(){
+		currentTerrain = TerrainNav.Zeroed;
+		lateralVelocity = Vector2.zero;
+		verticalSpeed = 0f;
+	}
 }

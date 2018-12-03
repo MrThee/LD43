@@ -106,7 +106,7 @@ public class PowerupMan : MonoBehaviour {
                 cutsceneHandler.SetSpeech("Now behold! The peashooter!");
             },
             () => {
-                cutsceneHandler.SetSpeech("Click to fire your weapon!");
+                cutsceneHandler.SetSpeech("Press Spacebar to fire your weapon!");
             },
             () => {
                 shownCutscene = true;

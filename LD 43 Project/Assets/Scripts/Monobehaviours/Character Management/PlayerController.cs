@@ -7,7 +7,8 @@ public class PlayerController : CharacterDriver {
 	public enum State {
 		Idle,
 		InAir,
-		Running
+		Running,
+		Dying
 	}
 
 	[Header("Harnesses")]
@@ -46,6 +47,7 @@ public class PlayerController : CharacterDriver {
 
 	public State state { get; private set;}
 	private System.Action<float> m_stateAction;
+	private Vector3 m_spawnPosition;
 
     public int Score;
 
@@ -60,6 +62,7 @@ public class PlayerController : CharacterDriver {
 		// planar forward for this field
 		this.m_intendedFacingDirection = kCharacter.planarForward;
 		this.takeDamage = new WillDid<int>();
+		this.m_spawnPosition = transform.position;
 		kCharacter.kAnimation.Play("Idle");
 		kFaceHarness.GenerateHead();
 
@@ -290,6 +293,19 @@ public class PlayerController : CharacterDriver {
 		}
 	}
 
+	void Dying(float deltaTime){
+		if(kCharacter.kAnimation.IsPlaying("Die") == false){
+			// Recover...
+			transform.position = m_spawnPosition;
+			kCharacter.kAnimation.Play("Jump");
+			kCharacter.kAnimation.Play("InAir");
+			kCharacter.movementState.LaunchForHeight(1f);
+			kFaceHarness.GenerateHead(); // Regenerate.
+			hp = maxHP;
+			ChangePlayerState(InAir, State.InAir);
+		}
+	}
+
 	void OnControllerColliderHit(ControllerColliderHit hitInfo) {
 		switch(state){
 			case State.InAir:
@@ -373,9 +389,17 @@ public class PlayerController : CharacterDriver {
         else {
             kCharacter.movementState.OverrideLateralVelocity(knockBackSpeed);
         }
-        kCharacter.kAnimation.Play("Jump");
-        kCharacter.kAnimation.PlayQueued("InAir");
-        ChangePlayerState(InAir, State.InAir);
+
+		if(hp > 0){
+			// Knockback.
+			kCharacter.kAnimation.Play("Jump");
+			kCharacter.kAnimation.PlayQueued("InAir");
+			ChangePlayerState(InAir, State.InAir);
+		}
+		else {
+			// Decapitate. TODO: respawn
+			HandleDeath();
+		}
     }
 
 	public void EnableDash(bool dashOn){
@@ -384,6 +408,17 @@ public class PlayerController : CharacterDriver {
 
 	public void EnableWallJump(bool wallJumpOn){
 		this.canWallJump = wallJumpOn;
+	}
+
+	void HandleDeath(){
+		Rigidbody fruitHead = kFaceHarness.Decapitate();
+		Vector2 dir = Random.insideUnitCircle;
+		dir.Normalize();
+		fruitHead.velocity = dir * 5f;
+
+		kCharacter.kAnimation.Play("Die");
+		kCharacter.movementState.ZeroOut();
+		ChangePlayerState(Dying, State.Dying);
 	}
 
 }
