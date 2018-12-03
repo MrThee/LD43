@@ -10,7 +10,9 @@ public class PlayerController : CharacterDriver {
 		Running
 	}
 
+	[Header("Harnesses")]
 	public InventoryHarness kInventoryHarness;
+	public FaceHarness kFaceHarness;
 	[Header("Movement")]
 	public float maxGroundSpeed = 10f;
 	public float maxGroundDecelStartSpeed = 5f;
@@ -55,8 +57,9 @@ public class PlayerController : CharacterDriver {
 		this.m_stateAction = Idle;
 		// only time we use
 		// planar forward for this field
-		this.m_intendedFacingDirection = kCharacter.planarForward; 
+		this.m_intendedFacingDirection = kCharacter.planarForward;
 		kCharacter.kAnimation.Play("Idle");
+		kFaceHarness.GenerateHead();
 
         gameStateHandler = FindObjectOfType<GameStateHandler>();
         abilityHandler = GetComponentInChildren<AbilityHandler>();

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f46489b4d9451419cc948b2eb5e3b4, type: 3}
+  m_Name: All the Face Parts
+  m_EditorClassIdentifier: 
+  heads:
+  - {fileID: 1853382626916526, guid: 6bb11083fb1574444b700402da087bd3, type: 2}
+  - {fileID: 1853382626916526, guid: 75874269416d72a498c7e2422384be1b, type: 2}
+  eyes:
+  - left: {fileID: 1396707711417730, guid: 2db10633af9d9f24ba5d267a3c0f9c36, type: 2}
+    right: {fileID: 1396707711417730, guid: c1acb9918c2295d4597ac06cfea742c6, type: 2}
+  - left: {fileID: 1396707711417730, guid: ec75c201829f41041a030d0f3869fec7, type: 2}
+    right: {fileID: 1396707711417730, guid: 0d699dde66724cd4ebd752914c812df2, type: 2}
+  - left: {fileID: 1396707711417730, guid: e860022c449c93b4696b2c2154f2bd4c, type: 2}
+    right: {fileID: 1396707711417730, guid: 568e37a2b0a94a44baf781b6d188a528, type: 2}
+  - left: {fileID: 1396707711417730, guid: 0adf1aefb346bb047abd2b1cc0ece563, type: 2}
+    right: {fileID: 1396707711417730, guid: 1aa195a9be1438f42a7751c21ca85463, type: 2}
+  mouths:
+  - {fileID: 1396707711417730, guid: a48f7e47d41630649ab71f40719a2044, type: 2}
+  noses:
+  - {fileID: 1396707711417730, guid: 75adec9e1e7465c4ab4138422ca68895, type: 2}
+  eyewears:
+  - {fileID: 1396707711417730, guid: 1eba1e52e44f51a4eb8d84e64321c0a2, type: 2}
