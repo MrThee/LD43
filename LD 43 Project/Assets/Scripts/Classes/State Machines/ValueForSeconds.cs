@@ -10,7 +10,10 @@ public class ValueForSeconds<T> {
 	public float onTimer { get { return driver.onTimer; } }
 	public WillDid activationEventHandler {get { return driver.activationEventHandler; } }
 	public WillDid deactivationEventHandler {get { return driver.deactivationEventHandler; } }
-	public WillDid<OnForSeconds.ThresholdEventArgs> thresholdEventHandler {get { return driver.thresholdEventHandler; } }
+	
+	public void AddThresholdAction(System.Action action, float when){
+		driver.AddThresholdAction(action, when);
+	}
 
 	private readonly T inactiveValue;
 

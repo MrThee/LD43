@@ -21,7 +21,7 @@ public class OnForSeconds {
 		this.onTimer = 0f;
 		this.activationEventHandler = new WillDid();
 		this.deactivationEventHandler = new WillDid();
-		this.thresholdEventHandler = new WillDid<ThresholdEventArgs>();
+		this.mk_thresholdActions = new List<ThresholdAction>();
 	}
 
 	public void UpdateState(float deltaTime) {
@@ -30,10 +30,15 @@ public class OnForSeconds {
 				oldOnTime = onTimer,
 				newOnTime = onTimer+deltaTime
 			};
-			thresholdEventHandler.Will.Invoke(teArgs);
+			float oldTime = onTimer;
 			onTimer += deltaTime;
-			thresholdEventHandler.Did.Invoke(teArgs);
+			float newTime = onTimer;
 
+			mk_thresholdActions.ForEach(ta => {
+				if(ta.threshold > oldTime && ta.threshold <= newTime){
+					ta.action.Invoke();
+				}
+			});
 
 			if(onTimer > currentDurationSet) {
 				deactivationEventHandler.Will.Invoke();
@@ -66,6 +71,18 @@ public class OnForSeconds {
 
 	public WillDid activationEventHandler {get; private set;}
 	public WillDid deactivationEventHandler {get; private set;}
-	public WillDid<ThresholdEventArgs> thresholdEventHandler {get; private set;}
+	
+	private List<ThresholdAction> mk_thresholdActions;
+
+	public void AddThresholdAction(System.Action action, float when){
+		this.mk_thresholdActions.Add(new ThresholdAction{
+			action = action, threshold = when
+		});
+	}
+
+	private class ThresholdAction {
+		public System.Action action;
+		public float threshold;
+	}
 
 }

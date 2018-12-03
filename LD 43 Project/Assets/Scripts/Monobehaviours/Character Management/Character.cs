@@ -60,9 +60,9 @@ public class Character : MonoBehaviour {
 	bool TerrainAnalysis(MovementState currMvmtState, float deltaTime, 
 		out Vector3 tangentVelocity)
 	{
-		Vector3 rcOffset = Vector3.up * 0.25f;
+		Vector3 rcOffset = Vector3.up * 0.1f;
 		int lm = -1;
-		float surveryDist = 0.75f;
+		float surveryDist = 0.5f;
 		// Should only be here if we're grounded
 		RaycastHit currentHit;
 		bool hit = Physics.Raycast(
