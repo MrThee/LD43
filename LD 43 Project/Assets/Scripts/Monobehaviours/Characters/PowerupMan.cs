@@ -34,7 +34,7 @@ public class PowerupMan : MonoBehaviour {
         cutsceneHandler.StartCutscene(new List<System.Action>
         {
             () => {
-                camera.FocusOnPlayer();
+                camera.Focus(player.transform);
                 camera.config.distanceToFocus = 10;
                 camera.config.focusOffset = 0;
                 cutsceneHandler.SetSpeech("Hello!");
@@ -44,7 +44,7 @@ public class PowerupMan : MonoBehaviour {
                 cutsceneHandler.SetSpeech("It's dangerous to go alone! Take this!");
             },
             () => {
-                camera.FocusOnPlayer();
+                camera.Focus(player.transform);
                 cutsceneHandler.SetSpeech("...");
             },
             () => {
@@ -55,7 +55,7 @@ public class PowerupMan : MonoBehaviour {
                 cutsceneHandler.SetSpeech("This weapon will let you defend against the rotten produce of this land.");
             },
             () => {
-                camera.FocusOnPlayer();
+                camera.Focus(player.transform);
                 cutsceneHandler.SetSpeech("Great!");
             },
             () => {
@@ -85,7 +85,7 @@ public class PowerupMan : MonoBehaviour {
             },
             () => {
                 camera.config.distanceToFocus = 10;
-                camera.FocusOnPlayer();
+                camera.Focus(player.transform);
                 cutsceneHandler.ShowChoice();
             },
             () => {
