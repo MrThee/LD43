@@ -10,6 +10,8 @@ public class Character : MonoBehaviour {
 
 	public MovementState movementState;
 
+	public Vector3 lastWallNormal {get; private set;}
+
 
 	// Use this for initialization
 	void Start () {
@@ -95,10 +97,28 @@ public class Character : MonoBehaviour {
 		return rightTangent * latMag * csc;
 	}
 
+	// Can be called multiple times per call to Controller.Move if multiple contact
+	// points are hit at the same time (e.g. a corner)
 	void OnControllerColliderHit(ControllerColliderHit hitInfo) {
-		if(hitInfo.normal.y > 0.707f) {
-			movementState.LandVertical();
+		if(movementState.currentTerrain == MovementState.TerrainNav.Air){
+			if(hitInfo.normal.y > 0.707f) {
+				movementState.LandVertical();
+			}
+			else if(hitInfo.normal.y <= 0.707f && hitInfo.normal.y >= 0.1f) {
+				// awkward corner. Evict.
+				float horzComp = Mathf.Sign(planarForward.x) 
+					* Mathf.Max(4f, movementState.lateralSpeed);
+				float vertComp = Mathf.Max(4f, movementState.verticalSpeed);
+				movementState.OverrideLateralVelocity(horzComp);
+				movementState.Launch(vertComp);
+			}
+			else if(Mathf.Abs(hitInfo.normal.y) < 0.1f){
+				// Wall. halt lateral velocity.
+				lastWallNormal = hitInfo.normal;
+				movementState.LandWall();
+			}
 		}
+		// Debug.Log(hitInfo.normal);
 	}
 
 	public void TurnTowards(Vector3 forward, float deltaTime) {

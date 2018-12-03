@@ -51,17 +51,9 @@ public class MovementState {
 			case TerrainNav.Ground:
 			break;
 
+			case TerrainNav.Wall:
 			case TerrainNav.Air:
 			verticalSpeed -= deltaTime * gravityMagnitude;
-			break;
-
-			case TerrainNav.Wall:
-			// TODO: edit w/ infrequently-changing "wall friction" field
-			// Maybe instead of downscaling gravity's influence, the deceleration
-			// should be proportional to the character's current speed,
-			// more akin to a terminal-velocity equation. Could also do a same thing for air...
-			// F_friction ~ k * speed
-			verticalSpeed -= deltaTime * gravityMagnitude * 0.25f;
 			break;
 		}
 	}
