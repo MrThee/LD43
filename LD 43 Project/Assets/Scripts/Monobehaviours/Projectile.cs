@@ -14,12 +14,14 @@ public class Projectile : MonoBehaviour {
 	}
 
 	private OnForSeconds mk_lifeTimer;
+	private int mk_damage;
 
 	public Vector3 velocity {get; private set;}
 
 	public void Kickoff(Params projParams, Vector3 origin, Vector3 direction){
 		this.mk_lifeTimer = new OnForSeconds(projParams.lifeTime);
 		this.mk_lifeTimer.deactivationEventHandler.Did.AddCallback(this.Destroy);
+		this.mk_damage = projParams.damage;
 		this.transform.position = origin;
 		this.velocity = direction * projParams.speed;
 
@@ -32,9 +34,9 @@ public class Projectile : MonoBehaviour {
 
 		Vector3 movementDelta = velocity * deltaTime;
 		float deltaLength = movementDelta.magnitude;
-		int lm = 0x801; // Hitboxes and default layer
+		int lm = 0x201; // Hitboxes and default layer
         RaycastHit hitInfo;
-        bool hit = Physics.Raycast(transform.position, velocity, out hitInfo, deltaLength, lm);
+        bool hit = Physics.Raycast(transform.position, velocity, out hitInfo, deltaLength, lm, QueryTriggerInteraction.Collide);
 
 		if(hit) {
             TryDoDamage(hitInfo);
@@ -49,15 +51,11 @@ public class Projectile : MonoBehaviour {
 	}
 
     void TryDoDamage(RaycastHit hitInfo) {
-        Rigidbody body = hitInfo.rigidbody;
-        if (body == null) {
+        Hitbox hitbox = hitInfo.collider.GetComponent<Hitbox>();
+        if (hitbox == null) {
             return;
         }
-        FlyingEnemy enemy = body.GetComponent<FlyingEnemy>();
-        if (enemy == null) {
-            return;
-        }
-        enemy.TakeDamage(1, velocity);
+        hitbox.TakeDamage(mk_damage, velocity);
     }
 
 	void Destroy() {
