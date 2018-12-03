@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class CharacterDriver : MonoBehaviour {
     public Character kCharacter;
+    public GameObject deathEffect;
     public int maxHP = 1;
     public int hp {get; protected set;}
     protected virtual void Start(){
@@ -12,6 +13,9 @@ public abstract class CharacterDriver : MonoBehaviour {
     public virtual void TakeDamage(int damage, Vector3 direction) {
         hp -= damage;
         if(hp <= 0){
+            if(deathEffect){
+                Instantiate(deathEffect, transform.position + 0.5f*Vector3.up, Quaternion.identity);
+            }
             Destroy(this.gameObject);
         }
     }
