@@ -16,7 +16,8 @@ public class PlayerController : MonoBehaviour {
 	public float maxGroundSpeed = 10f;
 	public float maxGroundDecelStartSpeed = 5f;
 	public float maxJumpHeight = 2f;
-	public float wallJumpHorzSpeed = 8f;
+    public float wallJumpHorzSpeed = 8f;
+	public float wallJumpHeight = 2f;
 	public float fastFallSpeed = 16f;
 	public float groundAcceleration = 80f;
 	public float groundDeceleration = 100f;
@@ -213,7 +214,7 @@ public class PlayerController : MonoBehaviour {
                 TryDash();
             }
 
-			// Wall-jump
+			// Wall-jump walljump wall jump
 			if(	mk_inputParser.space.pressed && 
 				ms.currentTerrain == MovementState.TerrainNav.Wall) 
 			{
@@ -221,10 +222,13 @@ public class PlayerController : MonoBehaviour {
 				kCharacter.kAnimation.Play("InAir");
 				float horzComp = wallJumpHorzSpeed * Mathf.Sign(kCharacter.lastWallNormal.x);
 				ms.OverrideLateralVelocity(horzComp);
-				ms.LaunchForHeight(maxJumpHeight*0.4f);
+                ms.LaunchForHeight(wallJumpHeight);
 				// Don't really need to change state.
 				m_intendedFacingDirection = horzComp * Vector3.right;
 				kCharacter.Face(m_intendedFacingDirection);
+
+                // This is silly but unbalanced
+                // canDash = true;
 			}
 
 			// !GUN!
