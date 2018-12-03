@@ -2737,11 +2737,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114943531352140044, guid: c82cdd681261d4119afc6e16a0e0f8ec,
-        type: 2}
-      propertyPath: Icons.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 4376485855291352, guid: c82cdd681261d4119afc6e16a0e0f8ec, type: 2}
       propertyPath: m_LocalPosition.x
       value: 14.8
@@ -2773,11 +2768,6 @@ Prefab:
     - target: {fileID: 4376485855291352, guid: c82cdd681261d4119afc6e16a0e0f8ec, type: 2}
       propertyPath: m_RootOrder
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114048461273926266, guid: c82cdd681261d4119afc6e16a0e0f8ec,
-        type: 2}
-      propertyPath: maxHP
-      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c82cdd681261d4119afc6e16a0e0f8ec, type: 2}

@@ -51,7 +51,7 @@ public class Chooser : MonoBehaviour {
 
     public void ClearOptions() {
         while (optionIcons.Count > 0) {
-            Destroy(optionIcons[optionIcons.Count - 1]);
+            Destroy(optionIcons[optionIcons.Count - 1].gameObject);
             optionIcons.RemoveAt(optionIcons.Count - 1);
         }
     }

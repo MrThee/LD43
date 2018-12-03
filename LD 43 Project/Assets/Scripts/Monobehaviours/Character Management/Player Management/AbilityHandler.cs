@@ -25,6 +25,7 @@ public class AbilityHandler : MonoBehaviour {
     [Header("Other Things")]
 
     public ButterflyFriend butterflyPrefab;
+    public FiringArray peashooter;
 
     private PlayerController player;
 
@@ -35,7 +36,6 @@ public class AbilityHandler : MonoBehaviour {
 
         OwnedAbilities = new List<Ability>();
         GrantAbility(Ability.Dash);
-        GrantAbility(Ability.Gun);
     }
 
     public bool HasAbility(Ability ability) {
@@ -51,6 +51,10 @@ public class AbilityHandler : MonoBehaviour {
             case Ability.Butterfly:
                 ButterflyFriend butterfly = Instantiate(butterflyPrefab);
                 butterfly.transform.position = player.transform.position;
+                break;
+            case Ability.Gun:
+                InventoryHarness harness = FindObjectOfType<InventoryHarness>();
+                harness.AddGun(peashooter, true);
                 break;
         }
     }
@@ -68,6 +72,10 @@ public class AbilityHandler : MonoBehaviour {
                 ButterflyFriend butterfly = FindObjectOfType<ButterflyFriend>();
                 // TODO: butterfly dying VFX/SFX
                 Destroy(butterfly.gameObject);
+                break;
+            case Ability.Gun:
+                InventoryHarness harness = FindObjectOfType<InventoryHarness>();
+                harness.UnEquipGun();
                 break;
         }
     }
