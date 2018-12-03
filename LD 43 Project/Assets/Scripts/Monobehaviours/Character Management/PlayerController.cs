@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
 	public float maxGroundSpeed = 10f;
 	public float maxGroundDecelStartSpeed = 5f;
 	public float maxJumpHeight = 2f;
+	public float wallJumpHorzSpeed = 8f;
 	public float fastFallSpeed = 16f;
 	public float groundAcceleration = 80f;
 	public float groundDeceleration = 100f;
@@ -113,18 +114,18 @@ public class PlayerController : MonoBehaviour {
                 ChangePlayerState(InAir, State.InAir);
                 return;
             }
-        }
 
-		if(kInventoryHarness.currentGun) {
-			if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
-				// FIRE!
-				kCharacter.kAnimation.Stop();
-				kCharacter.kAnimation.Play("FireFromIdle");
-				kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
-				kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
-				mk_fireCooldown.ActivateForDefaultDuration();
+			if(kInventoryHarness.currentGun) {
+				if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+					// FIRE!
+					kCharacter.kAnimation.Stop();
+					kCharacter.kAnimation.Play("FireFromIdle");
+					kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
+					kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
+					mk_fireCooldown.ActivateForDefaultDuration();
+				}
 			}
-		}
+        }
 
         DampenSpeed(deltaTime);
 
@@ -142,7 +143,17 @@ public class PlayerController : MonoBehaviour {
 	void Running(float deltaTime){
         Vector2 userDirection = Vector2.zero;
         if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
-            userDirection = mk_inputParser.GetDirection(); 
+            userDirection = mk_inputParser.GetDirection();
+
+			if(kInventoryHarness.currentGun){
+				if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+					// FIRE!
+					kCharacter.kAnimation.Play("FireFromRun");
+					// kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
+					kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
+					mk_fireCooldown.ActivateForDefaultDuration();
+				}
+			}
         }
 		MovementState ms = kCharacter.movementState;
 
@@ -163,16 +174,6 @@ public class PlayerController : MonoBehaviour {
         {
             StartDash();
         }
-
-		if(kInventoryHarness.currentGun){
-			if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
-				// FIRE!
-				kCharacter.kAnimation.Play("FireFromRun");
-				// kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
-				kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
-				mk_fireCooldown.ActivateForDefaultDuration();
-			}
-		}
 
 		// Keep movin'
 		Vector2 latVelocity = maxGroundSpeed * Vector2.right * userDirection.x;
@@ -201,24 +202,39 @@ public class PlayerController : MonoBehaviour {
                 ms.OverrideVerticalSpeed(-fastFallSpeed);
             }
 
+			// Dash
             if (mk_inputParser.shift.pressed && canDash)
             {
                 canDash = false;
                 StartDash();
             }
-        }
 
-		// !GUN!
-		if(kInventoryHarness.currentGun){
-			if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
-				// FIRE!
-				kCharacter.kAnimation.Stop();
-				kCharacter.kAnimation.Play("FireFromAir");
-				kCharacter.kAnimation.CrossFadeQueued("InAir", 0.1f);
-				kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
-				mk_fireCooldown.ActivateForDefaultDuration();
+			// Wall-jump
+			if(	mk_inputParser.space.pressed && 
+				ms.currentTerrain == MovementState.TerrainNav.Wall) 
+			{
+				kCharacter.kAnimation.Play("Jump");
+				kCharacter.kAnimation.Play("InAir");
+				float horzComp = wallJumpHorzSpeed * Mathf.Sign(kCharacter.lastWallNormal.x);
+				ms.OverrideLateralVelocity(horzComp);
+				ms.LaunchForHeight(maxJumpHeight*0.4f);
+				// Don't really need to change state.
+				m_intendedFacingDirection = horzComp * Vector3.right;
+				kCharacter.Face(m_intendedFacingDirection);
 			}
-		}
+
+			// !GUN!
+			if(kInventoryHarness.currentGun){
+				if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+					// FIRE!
+					kCharacter.kAnimation.Stop();
+					kCharacter.kAnimation.Play("FireFromAir");
+					kCharacter.kAnimation.CrossFadeQueued("InAir", 0.1f);
+					kInventoryHarness.currentGun.Launch(firePoint.position, kCharacter.planarForward);
+					mk_fireCooldown.ActivateForDefaultDuration();
+				}
+			}
+        }
 
         // Air-drift
         Vector2 userDir = Vector2.zero;
