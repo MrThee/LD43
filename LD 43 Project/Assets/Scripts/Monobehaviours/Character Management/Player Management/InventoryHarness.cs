@@ -64,6 +64,9 @@ public class InventoryHarness : MonoBehaviour {
 	}
 
 	public void UnEquipGun(){
+		if(currentGun){
+			currentGun.gameObject.SetActive(false);
+		}
 		m_currentGunIndex = -1;
 	}
 }
