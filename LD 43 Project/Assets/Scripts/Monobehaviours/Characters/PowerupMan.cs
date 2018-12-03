@@ -45,10 +45,10 @@ public class PowerupMan : MonoBehaviour {
             },
             () => {
                 camera.Focus(transform);
-                cutsceneHandler.chooser.gameObject.SetActive(true);
+                cutsceneHandler.ShowChoice();
             },
             () => {
-                cutsceneHandler.chooser.gameObject.SetActive(false);
+                cutsceneHandler.HideChoice();
                 camera.Focus(transform);
                 cutsceneHandler.SetSpeech(
                     string.Format(

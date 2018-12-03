@@ -30,18 +30,21 @@ public class CutsceneHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gameStateHandler.state != GameStateHandler.GameState.Cutscene) {
+        if (gameStateHandler.state != GameStateHandler.GameState.Cutscene)
+        {
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space)) {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
 
             PerformNextStep();
 
-       }
+        }
     }
 
-    private void PerformNextStep() {
+    private void PerformNextStep()
+    {
         HideSpeechBox();
 
         Action action = cutsceneActions[actionIndex];
@@ -55,9 +58,20 @@ public class CutsceneHandler : MonoBehaviour
         }
     }
 
-    private void HideSpeechBox() {
+    private void HideSpeechBox()
+    {
         speechBubble.gameObject.SetActive(false);
         textMesh.gameObject.SetActive(false);
+    }
+
+    public void ShowChoice() {
+        chooser.gameObject.SetActive(true);
+        chooser.UpdateOptions();
+    }
+
+    public void HideChoice() {
+        chooser.gameObject.SetActive(false);
+        chooser.ClearOptions();
     }
 
     public void SetSpeech(String text) {

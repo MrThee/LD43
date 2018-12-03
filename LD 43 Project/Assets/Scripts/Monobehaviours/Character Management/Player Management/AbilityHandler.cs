@@ -8,7 +8,7 @@ public class AbilityHandler : MonoBehaviour {
         Dash,
         Gun,
         Butterfly,
-        Walljump
+        Walljump,
     }
 
     [System.Serializable]
@@ -36,7 +36,6 @@ public class AbilityHandler : MonoBehaviour {
         OwnedAbilities = new List<Ability>();
         GrantAbility(Ability.Dash);
         GrantAbility(Ability.Gun);
-        GrantAbility(Ability.Butterfly);
     }
 
     public bool HasAbility(Ability ability) {

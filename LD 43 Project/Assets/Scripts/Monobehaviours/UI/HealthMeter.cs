@@ -22,7 +22,7 @@ public class HealthMeter : MonoBehaviour {
 	void Update () {
         // need to add more
         while (player.hp > hearts.Count) {
-            RectTransform heart = Instantiate(HeartPrefab, transform);
+            RectTransform heart = Instantiate(HeartPrefab, transform, false);
             heart.localPosition = hearts.Count * heartSpacing * Vector3.right;
             hearts.Add(heart);
         }
