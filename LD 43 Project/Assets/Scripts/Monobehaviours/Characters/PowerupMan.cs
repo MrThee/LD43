@@ -31,6 +31,8 @@ public class PowerupMan : MonoBehaviour {
         CutsceneHandler cutsceneHandler = FindObjectOfType<CutsceneHandler>();
         FollowPlayer camera = FindObjectOfType<FollowPlayer>();
         PlayerController player = FindObjectOfType<PlayerController>();
+        MusicController musicController = FindObjectOfType<MusicController>();
+
         cutsceneHandler.StartCutscene(new List<System.Action>
         {
             () => {
@@ -62,6 +64,7 @@ public class PowerupMan : MonoBehaviour {
                 camera.Focus(transform);
                 camera.config.distanceToFocus = 7;
                 cutsceneHandler.SetSpeech("Hold on!");
+                musicController.TransitionTo(musicController.Scary, 4);
             },
             () => {
                 cutsceneHandler.SetSpeech("Only the worthy receive the gift.");
@@ -101,6 +104,8 @@ public class PowerupMan : MonoBehaviour {
                 handler.RemoveAbility(selectedAbility);
 
                 handler.GrantAbility(AbilityHandler.Ability.Gun);
+
+                musicController.TransitionTo(musicController.Background1);
             },
             () => {
                 cutsceneHandler.SetSpeech("Now behold! The peashooter!");
