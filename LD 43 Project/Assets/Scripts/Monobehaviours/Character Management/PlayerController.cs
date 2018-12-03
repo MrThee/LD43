@@ -46,7 +46,9 @@ public class PlayerController : CharacterDriver {
     public int Score;
 
 	// Use this for initialization.. TODO: delet this.
-	void Start () {
+	protected override void Start () {
+        base.Start();
+
 		this.mk_inputParser = new InputParser();
 		this.mk_fireCooldown = new OnForSeconds(0.25f);
 		this.state = State.Idle;
