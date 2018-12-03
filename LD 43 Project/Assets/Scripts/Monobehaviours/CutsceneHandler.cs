@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CutsceneHandler : MonoBehaviour
 {
+    public Chooser chooser;
 
     private int actionIndex = 0;
     private List<Action> cutsceneActions;
@@ -20,30 +21,9 @@ public class CutsceneHandler : MonoBehaviour
         camera = FindObjectOfType<FollowPlayer>();
         defaultCameraConfig = camera.config;
 
-        cutsceneActions = new List<Action>{
-            () => {
-                ButterflyFriend friend = FindObjectOfType<ButterflyFriend>();
-                camera.kFocus = friend.transform;
-                camera.config.focusOffset = 0;
-            },
-            () => {
-                camera.config.distanceToFocus = 10;
-            },
-            () => {
-                camera.config.distanceToFocus = 5;
-            },
-            () => {
-                camera.config.distanceToFocus = 2;
-            },
-            () => {
-                Canvas canvas = FindObjectOfType<Canvas>();
-                canvas.enabled = true;
-            },
-            () => {
-                Canvas canvas = FindObjectOfType<Canvas>();
-                canvas.enabled = false;
-            },
-        };
+        chooser = FindObjectOfType<Chooser>();
+
+        cutsceneActions = new List<Action>();
     }
 
     // Update is called once per frame
@@ -55,21 +35,37 @@ public class CutsceneHandler : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space)) {
 
-            Action action = cutsceneActions[actionIndex];
-            action.Invoke();
+            PerformNextStep();
 
-            actionIndex++;
-            if (actionIndex >= cutsceneActions.Count)
-            {
-                EndCutscene();
-                return;
-            }
+       }
+    }
+
+    private void PerformNextStep() {
+        Action action = cutsceneActions[actionIndex];
+        action.Invoke();
+
+        actionIndex++;
+        if (actionIndex >= cutsceneActions.Count)
+        {
+            EndCutscene();
+            return;
         }
+    }
+
+    public void StartCutscene(List<Action> cutsceneSteps) {
+        cutsceneActions.AddRange(cutsceneSteps);
+        gameStateHandler.state = GameStateHandler.GameState.Cutscene;
+
+        // Perform the next step.
+        PerformNextStep();
     }
 
     private void EndCutscene() {
         ResetCamera();
         gameStateHandler.state = GameStateHandler.GameState.GamePlay;
+
+        cutsceneActions.Clear();
+        actionIndex = 0;
     }
 
     private void ResetCamera() {

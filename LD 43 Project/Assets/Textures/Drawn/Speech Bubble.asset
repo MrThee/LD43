@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -1566551335, guid: ab85ac808950aa04ea8320fc273cd8c0, type: 3}
-  m_Name: Animation_2018-12-1_22-23-57
+  m_Name: Speech Bubble
   m_EditorClassIdentifier: 
   frames:
   - _texture: {fileID: 28581159802729414}
@@ -122,7 +122,7 @@ Sprite:
   m_AtlasName: 
   m_PackingTag: 
   m_RenderDataKey:
-    00000000000000000000000000000000: 0
+    3a1227512c1b245e8bcc3f67d8494336: 213608177264686250
   m_AtlasTags: []
   m_SpriteAtlas: {fileID: 0}
   m_RD:
@@ -277,7 +277,7 @@ Sprite:
   m_AtlasName: 
   m_PackingTag: 
   m_RenderDataKey:
-    00000000000000000000000000000000: 0
+    3a1227512c1b245e8bcc3f67d8494336: 213692460930076188
   m_AtlasTags: []
   m_SpriteAtlas: {fileID: 0}
   m_RD:
