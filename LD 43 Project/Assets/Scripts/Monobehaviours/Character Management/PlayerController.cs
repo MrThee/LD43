@@ -36,6 +36,7 @@ public class PlayerController : CharacterDriver {
     [Header("SFX")]
     public AudioSource stepSfx;
     public AudioSource landSfx;
+	public WillDid<int> takeDamage {get; private set;}
 
     private GameStateHandler gameStateHandler;
     private AbilityHandler abilityHandler;
@@ -48,7 +49,6 @@ public class PlayerController : CharacterDriver {
 
     public int Score;
 
-	// Use this for initialization.. TODO: delet this.
 	protected override void Start () {
         base.Start();
 
@@ -59,6 +59,7 @@ public class PlayerController : CharacterDriver {
 		// only time we use
 		// planar forward for this field
 		this.m_intendedFacingDirection = kCharacter.planarForward;
+		this.takeDamage = new WillDid<int>();
 		kCharacter.kAnimation.Play("Idle");
 		kFaceHarness.GenerateHead();
 
@@ -359,8 +360,10 @@ public class PlayerController : CharacterDriver {
 
     public override void TakeDamage(int amount, Vector3 direction) {
 		// Don't call base.
+		takeDamage.Will.Invoke(amount);
 		hp -= amount;
-        Debug.Log("Taking some damage");
+		Debug.Log("Ow");
+        takeDamage.Did.Invoke(amount);
         // Just quickly push the player back a little. Hopefully doesn't break things.
 
         kCharacter.movementState.LaunchForHeight(knockBackHeight);

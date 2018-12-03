@@ -67,7 +67,7 @@ public class MovementState {
 
 	public void LandWall() {
 		currentTerrain = TerrainNav.Wall;
-		// lateralVelocity = Vector2.zero;
+		OverrideLateralSpeed(Mathf.Min(lateralSpeed*0.5f, 1f));
 	}
 
 	public void LaunchForHeight(float heightDelta) {
