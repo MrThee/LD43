@@ -13,12 +13,12 @@ public class RendererWrapper : MonoBehaviour {
 		this.mk_defaultBindings = new Dictionary<Renderer, Material>();
 		
 		this.mk_redFlasher = new OnForSeconds(2f);
-		this.mk_redFlasher.AddThresholdAction(_ChangeToRedMat, 0.00f);
-		this.mk_redFlasher.AddThresholdAction(_ChangeToRedMat, 0.50f);
-		this.mk_redFlasher.AddThresholdAction(_ChangeToRedMat, 1.00f);
-		this.mk_redFlasher.AddThresholdAction(ChangeToDefaultMat, 0.25f);
-		this.mk_redFlasher.AddThresholdAction(ChangeToDefaultMat, 0.75f);
-		this.mk_redFlasher.AddThresholdAction(ChangeToDefaultMat, 1.25f);
+		this.mk_redFlasher.AddThresholdAction(_ChangeToRedMat, 0.0f);
+		this.mk_redFlasher.AddThresholdAction(_ChangeToRedMat, 0.2f);
+		this.mk_redFlasher.AddThresholdAction(_ChangeToRedMat, 0.4f);
+		this.mk_redFlasher.AddThresholdAction(ChangeToDefaultMat, 0.1f);
+		this.mk_redFlasher.AddThresholdAction(ChangeToDefaultMat, 0.3f);
+		this.mk_redFlasher.AddThresholdAction(ChangeToDefaultMat, 0.5f);
 
 		this.Rebind();
 	}
@@ -31,6 +31,7 @@ public class RendererWrapper : MonoBehaviour {
 	public void Rebind(){
 		List<Renderer> renderers = new List<Renderer>();
 		GetComponentsInChildren<Renderer>(true, renderers);
+		Rebind(renderers);
 	}
 	
 	public void Rebind(List<Renderer> Rs){

@@ -35,7 +35,7 @@ public class OnForSeconds {
 			float newTime = onTimer;
 
 			mk_thresholdActions.ForEach(ta => {
-				if(ta.threshold > oldTime && ta.threshold <= newTime){
+				if(ta.threshold >= oldTime && ta.threshold < newTime){
 					ta.action.Invoke();
 				}
 			});

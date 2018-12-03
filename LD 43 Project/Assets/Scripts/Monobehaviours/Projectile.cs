@@ -5,6 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour {
 
 	public LifeTimer kTrail;
+	public LifeTimer hitEnemyFXPrefab;
 
 	[System.Serializable]
 	public class Params {
@@ -40,7 +41,6 @@ public class Projectile : MonoBehaviour {
 
 		if(hit) {
             TryDoDamage(hitInfo);
-
 			Destroy();
 			return;
 		}
@@ -56,6 +56,9 @@ public class Projectile : MonoBehaviour {
             return;
         }
         hitbox.TakeDamage(mk_damage, velocity);
+		if(hitEnemyFXPrefab){
+			Instantiate(hitEnemyFXPrefab, transform.position, Quaternion.identity);
+		}
     }
 
 	void Destroy() {

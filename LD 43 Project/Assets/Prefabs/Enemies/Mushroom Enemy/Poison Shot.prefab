@@ -278,3 +278,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kTrail: {fileID: 114402982526231890}
+  hitEnemyFXPrefab: {fileID: 114320676719940022, guid: b70936c6134c4a6478637291ccabf1f8,
+    type: 2}

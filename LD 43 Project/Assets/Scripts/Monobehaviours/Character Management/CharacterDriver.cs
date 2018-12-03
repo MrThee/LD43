@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class CharacterDriver : MonoBehaviour {
     public Character kCharacter;
+    public RendererWrapper kRendWrap;
     public GameObject deathEffect;
     public int maxHP = 1;
     public int hp {get; protected set;}

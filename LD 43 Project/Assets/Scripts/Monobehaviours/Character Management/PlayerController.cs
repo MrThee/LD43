@@ -65,6 +65,7 @@ public class PlayerController : CharacterDriver {
 		this.m_spawnPosition = transform.position;
 		kCharacter.kAnimation.Play("Idle");
 		kFaceHarness.GenerateHead();
+		kRendWrap.Rebind();
 
         gameStateHandler = FindObjectOfType<GameStateHandler>();
         abilityHandler = GetComponentInChildren<AbilityHandler>();
@@ -301,6 +302,7 @@ public class PlayerController : CharacterDriver {
 			kCharacter.kAnimation.Play("InAir");
 			kCharacter.movementState.LaunchForHeight(1f);
 			kFaceHarness.GenerateHead(); // Regenerate.
+			kRendWrap.Rebind(); // New meshes will be created...
 			hp = maxHP;
 			ChangePlayerState(InAir, State.InAir);
 		}
@@ -391,10 +393,11 @@ public class PlayerController : CharacterDriver {
         }
 
 		if(hp > 0){
-			// Knockback.
+			// Knockback. Flash red
 			kCharacter.kAnimation.Play("Jump");
 			kCharacter.kAnimation.PlayQueued("InAir");
 			ChangePlayerState(InAir, State.InAir);
+			kRendWrap.FlashRed();
 		}
 		else {
 			// Decapitate. TODO: respawn
