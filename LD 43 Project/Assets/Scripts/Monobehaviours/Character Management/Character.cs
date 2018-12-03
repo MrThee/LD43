@@ -35,7 +35,7 @@ public class Character : MonoBehaviour {
 				float horzComp = Mathf.Sign(tangentVelocity.x) 
 					* Mathf.Max(4f, Mathf.Abs(tangentVelocity.x));
 				float vertComp = Mathf.Max(4f, tangentVelocity.y);
-				movementState.OverrideLateralSpeed(horzComp);
+				movementState.OverrideLateralVelocity(horzComp);
 				movementState.Launch(vertComp);
 				Vector3 delta = deltaTime * movementState.CalcTotalVelocity();
 				kController.Move(delta);
@@ -62,8 +62,9 @@ public class Character : MonoBehaviour {
 			surveryDist, lm
 		);
 		if(hit == false){
-			tangentVelocity = Vector3.zero;
-			return false; // You shouldn't really hit this... hopefully.
+			// Going into a corner
+			tangentVelocity = Vector3.right * currMvmtState.lateralVelocity.x;
+			return false;
 		}
 
 		tangentVelocity = CalcTangentVelocity(currentHit.normal, currMvmtState.lateralVelocity.x * Vector3.right);

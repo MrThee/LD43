@@ -100,8 +100,8 @@ public class MovementState {
 		lateralVelocity = currentLatDir * newLatSpeed;
 	}
 
-    public void OverrideLateralVelocity(float newLatSpeed) {
-        lateralVelocity = Vector2.right * newLatSpeed;
+    public void OverrideLateralVelocity(float newHorzVelocityComp) {
+        lateralVelocity = Vector2.right * newHorzVelocityComp;
     }
 
     public void AccelerateLateral(Vector2 finalLateralVelocity, float rate, float deltaTime)
