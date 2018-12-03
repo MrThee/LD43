@@ -2,20 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlyingEnemy : MonoBehaviour {
+public class FlyingEnemy : AIController {
     
     private Rigidbody body;
-    private PlayerController player;
 
     public float speed = 1f;
     private Vector3 velocity = new Vector3();
 
 	// Use this for initialization
-	void Start () {
+	protected override void Start(){
+        base.Start();
         body = GetComponent<Rigidbody>();
-        player = FindObjectOfType<PlayerController>();
-	}
-	
+    }
 	// Update is called once per frame
 	void FixedUpdate () {
         Vector3 direction = (player.transform.position - transform.position).normalized;
@@ -30,9 +28,5 @@ public class FlyingEnemy : MonoBehaviour {
         if (hitPlayer) {
             hitPlayer.TakeDamage(1, hitPlayer.transform.position - transform.position);
         }
-    }
-
-    public void TakeDamage(int damage, Vector3 direction) {
-        Destroy(gameObject);
     }
 }

@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : CharacterDriver {
 
 	public enum State {
 		Idle,
 		InAir,
 		Running
 	}
-
-	public Character kCharacter;
+	
 	public InventoryHarness kInventoryHarness;
 	[Header("Movement")]
 	public float maxGroundSpeed = 10f;
@@ -345,9 +344,9 @@ public class PlayerController : MonoBehaviour {
         return dashSpeed;
     }
 
-    public void TakeDamage(int amount, Vector3 direction) {
+    public override void TakeDamage(int amount, Vector3 direction) {
         Debug.Log("Taking some damage");
-        health -= amount;
+        base.TakeDamage(amount, direction);
         // Just quickly push the player back a little. Hopefully doesn't break things.
 
         kCharacter.movementState.LaunchForHeight(knockBackHeight);

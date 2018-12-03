@@ -2,11 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MushroomEnemy : MonoBehaviour {
-	public Character kCharacter;
-
-	private PlayerController mk_player;
-
+public class MushroomEnemy : AIController {
 	public enum State {
 		Idle,
 		Attack
@@ -16,8 +12,8 @@ public class MushroomEnemy : MonoBehaviour {
 	private System.Action<float> m_stateAction;
 
 	// Use this for initialization
-	void Start () {
-		this.mk_player = FindObjectOfType<PlayerController>();
+	protected override void Start () {
+		base.Start();
 		this.ChangeState(Idle, State.Idle);
 		this.kCharacter.kAnimation.Play("Idle");
 	}
@@ -47,9 +43,5 @@ public class MushroomEnemy : MonoBehaviour {
 			kCharacter.kAnimation.CrossFade("Idle", 0.1f);
 			ChangeState(Idle, State.Idle);
 		}
-	}
-
-	private Vector3 GetToPlayer(){
-		return mk_player.transform.position - transform.position;
 	}
 }
