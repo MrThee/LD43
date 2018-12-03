@@ -3746,6 +3746,12 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114048461273926266, guid: c82cdd681261d4119afc6e16a0e0f8ec,
+        type: 2}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 1096646574290648, guid: e823ca63b6c71394b8b8373a31dcd55a,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c82cdd681261d4119afc6e16a0e0f8ec, type: 2}
   m_IsPrefabParent: 0

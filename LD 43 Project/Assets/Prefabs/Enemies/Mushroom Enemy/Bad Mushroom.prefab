@@ -396,6 +396,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kCharacter: {fileID: 114370148086936440}
+  deathEffect: {fileID: 1096646574290648, guid: e823ca63b6c71394b8b8373a31dcd55a,
+    type: 2}
   maxHP: 1
 --- !u!114 &114816931332010016
 MonoBehaviour:
