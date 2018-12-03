@@ -53,6 +53,7 @@ GameObject:
   - component: {fileID: 4202324239891964}
   - component: {fileID: 114536479195423462}
   - component: {fileID: 114370148086936440}
+  - component: {fileID: 114944115425049634}
   m_Layer: 0
   m_Name: Bad Mushroom
   m_TagString: Untagged
@@ -243,7 +244,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1113348542975294}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 2, y: 6.311, z: -0}
+  m_LocalPosition: {x: 109.2, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4764404378871240}
@@ -396,9 +397,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kCharacter: {fileID: 114370148086936440}
+  kRendWrap: {fileID: 114944115425049634}
   deathEffect: {fileID: 1096646574290648, guid: e823ca63b6c71394b8b8373a31dcd55a,
     type: 2}
-  maxHP: 1
+  maxHP: 3
 --- !u!114 &114816931332010016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -431,6 +433,18 @@ MonoBehaviour:
   - {fileID: 4039082120161138}
   roundDelta: 0
   nozzleFlare: {fileID: 0}
+--- !u!114 &114944115425049634
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1113348542975294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779ef7441fe1d9f42a21c8ce3213e138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redMat: {fileID: 2100000, guid: 70fe7ecd80536f0459033c9d31b5b6c4, type: 2}
 --- !u!135 &135184594114430084
 SphereCollider:
   m_ObjectHideFlags: 1

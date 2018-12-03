@@ -297,6 +297,7 @@ GameObject:
   - component: {fileID: 143311701123298604}
   - component: {fileID: 82918254290039154}
   - component: {fileID: 82257143540556654}
+  - component: {fileID: 114242723422271862}
   m_Layer: 12
   m_Name: Character
   m_TagString: Player
@@ -1072,6 +1073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kCharacter: {fileID: 114769816509996748}
+  kRendWrap: {fileID: 114242723422271862}
   deathEffect: {fileID: 0}
   maxHP: 3
   kInventoryHarness: {fileID: 114359720816726340}
@@ -1092,6 +1094,18 @@ MonoBehaviour:
   stepSfx: {fileID: 82918254290039154}
   landSfx: {fileID: 82257143540556654}
   Score: 0
+--- !u!114 &114242723422271862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1648879431590860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 779ef7441fe1d9f42a21c8ce3213e138, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  redMat: {fileID: 2100000, guid: 70fe7ecd80536f0459033c9d31b5b6c4, type: 2}
 --- !u!114 &114359720816726340
 MonoBehaviour:
   m_ObjectHideFlags: 1
