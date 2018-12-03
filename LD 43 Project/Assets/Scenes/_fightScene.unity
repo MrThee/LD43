@@ -2703,17 +2703,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114359720816726340, guid: c82cdd681261d4119afc6e16a0e0f8ec,
-        type: 2}
-      propertyPath: testGun1
-      value: 
-      objectReference: {fileID: 114380802696738240, guid: e66897a4609c8cf458e6d598df4ecb4a,
-        type: 2}
-    - target: {fileID: 114048461273926266, guid: c82cdd681261d4119afc6e16a0e0f8ec,
-        type: 2}
-      propertyPath: wallJumpHeight
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c82cdd681261d4119afc6e16a0e0f8ec, type: 2}
   m_IsPrefabParent: 0

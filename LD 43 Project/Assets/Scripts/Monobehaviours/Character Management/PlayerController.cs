@@ -30,6 +30,10 @@ public class PlayerController : CharacterDriver {
 	[Header("Combat")]
 	public Transform firePoint;
 
+    [Header("SFX")]
+    public AudioSource stepSfx;
+    public AudioSource landSfx;
+
     private GameStateHandler gameStateHandler;
     private AbilityHandler abilityHandler;
 	private InputParser mk_inputParser;
@@ -39,8 +43,7 @@ public class PlayerController : CharacterDriver {
 	public State state { get; private set;}
 	private System.Action<float> m_stateAction;
 
-    // Health things
-    private int health;
+    public int Score;
 
 	// Use this for initialization.. TODO: delet this.
 	void Start () {
@@ -300,6 +303,9 @@ public class PlayerController : CharacterDriver {
                         kCharacter.kAnimation.CrossFade("Idle");
                         ChangePlayerState(Idle, State.Idle);
                     }
+
+                    landSfx.Play();
+
                 }
 			break;
 		}

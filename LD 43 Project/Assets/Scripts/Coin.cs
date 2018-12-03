@@ -14,7 +14,7 @@ public class Coin : MonoBehaviour {
         }
 
         Destroy(gameObject);
-        // TODO: Get a coin
+        player.Score++;
         AudioSource.PlayClipAtPoint(sound, this.transform.position);
     }
 }
