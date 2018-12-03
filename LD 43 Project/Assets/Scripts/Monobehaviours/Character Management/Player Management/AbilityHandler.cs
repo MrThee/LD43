@@ -11,7 +11,18 @@ public class AbilityHandler : MonoBehaviour {
         Walljump
     }
 
+    [System.Serializable]
+    public class IconPair
+    {
+        public Ability name;
+        public RectTransform icon;
+    }
+
     public List<Ability> OwnedAbilities;
+
+    public List<IconPair> Icons;
+
+    [Header("Other Things")]
 
     public ButterflyFriend butterflyPrefab;
 

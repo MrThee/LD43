@@ -1012,7 +1012,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   kCharacter: {fileID: 114769816509996748}
-  maxHP: 1
+  deathEffect: {fileID: 0}
+  maxHP: 3
   kInventoryHarness: {fileID: 114359720816726340}
   kFaceHarness: {fileID: 114429672438402282}
   maxGroundSpeed: 8
@@ -1104,6 +1105,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OwnedAbilities: 
+  Icons:
+  - name: 0
+    icon: {fileID: 224591190366244566, guid: 64eb514756c2a463abcfb7a602e1a289, type: 2}
+  - name: 2
+    icon: {fileID: 224491653727363628, guid: 2e75b4299113c487bb2762e47ac21794, type: 2}
+  - name: 1
+    icon: {fileID: 224861562719553042, guid: 672afc7eea2914f578d9a3b014858624, type: 2}
   butterflyPrefab: {fileID: 114717366214570574, guid: c2d7d879f64774f5086a31021db77d67,
     type: 2}
 --- !u!137 &137181097877434788
