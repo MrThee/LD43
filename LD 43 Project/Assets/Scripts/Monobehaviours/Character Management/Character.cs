@@ -21,30 +21,38 @@ public class Character : MonoBehaviour {
 	// Update is called once per frame
 	public void UpdateState(float deltaTime) {
 		movementState.MaybeApplyGravity(deltaTime);
-		Vector3 totalVelocity = movementState.CalcTotalVelocity();
-		Vector3 moveDelta = totalVelocity * deltaTime;
 
-		if(movementState.currentTerrain == MovementState.TerrainNav.Ground) {
-			Vector3 tangentVelocity;
-			bool platformThere = TerrainAnalysis(movementState, deltaTime, out tangentVelocity);
-			if(platformThere){
-				// Everything is fine (TM)
-				kController.Move(moveDelta);
+		if(kController) {
+			Vector3 totalVelocity = movementState.CalcTotalVelocity();
+			Vector3 moveDelta = totalVelocity * deltaTime;
+			if(movementState.currentTerrain == MovementState.TerrainNav.Ground) {
+				Vector3 tangentVelocity;
+				bool platformThere = TerrainAnalysis(movementState, deltaTime, out tangentVelocity);
+				if(platformThere){
+					// Everything is fine (TM)
+					kController.Move(moveDelta);
+				}
+				else {
+					// EVICT!
+					// By putting them into an aerial state.
+					float horzComp = Mathf.Sign(tangentVelocity.x) 
+						* Mathf.Max(4f, Mathf.Abs(tangentVelocity.x));
+					float vertComp = Mathf.Max(4f, tangentVelocity.y);
+					movementState.OverrideLateralVelocity(horzComp);
+					movementState.Launch(vertComp);
+					Vector3 delta = deltaTime * movementState.CalcTotalVelocity();
+					kController.Move(delta);
+				}
 			}
 			else {
-				// EVICT!
-				// By putting them into an aerial state.
-				float horzComp = Mathf.Sign(tangentVelocity.x) 
-					* Mathf.Max(4f, Mathf.Abs(tangentVelocity.x));
-				float vertComp = Mathf.Max(4f, tangentVelocity.y);
-				movementState.OverrideLateralVelocity(horzComp);
-				movementState.Launch(vertComp);
-				Vector3 delta = deltaTime * movementState.CalcTotalVelocity();
-				kController.Move(delta);
+				kController.Move(moveDelta);
 			}
 		}
 		else {
-			kController.Move(moveDelta);
+			Vector3 totalVelocity = movementState.CalcTotalVelocity(true);
+			Vector3 moveDelta = totalVelocity * deltaTime;
+			// No Character Controller Collider. You're a ghost.
+			transform.position += moveDelta;
 		}
 	}
 
