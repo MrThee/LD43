@@ -37,12 +37,15 @@ public class PowerupMan : MonoBehaviour {
                 camera.kFocus = transform;
                 camera.config.distanceToFocus = 10;
                 camera.config.focusOffset = 0;
+                cutsceneHandler.SetSpeech("Hello friend");
             },
             () => {
                 camera.kFocus = player.transform;
+                cutsceneHandler.SetSpeech("Hi there");
             },
             () => {
                 camera.kFocus = transform;
+                cutsceneHandler.SetSpeech("Ok, that's all");
             },
             () => {
                 shownCutscene = true;
