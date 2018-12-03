@@ -31,10 +31,12 @@ public class MushroomEnemy : AIController {
 
 	void Idle(float deltaTime) {
 		Vector3 toPlayer = GetToPlayer();
-		if(toPlayer.magnitude < 7f && Mathf.Abs(toPlayer.y) < 1f){
+		if(toPlayer.magnitude < 7f){
 			kCharacter.TurnTowards(Vector3.ProjectOnPlane(toPlayer, Vector3.up), deltaTime);
-			kCharacter.kAnimation.CrossFade("Spit");
-			ChangeState(Attack, State.Attack);
+			if(Mathf.Abs(toPlayer.y) < 1f){
+				kCharacter.kAnimation.CrossFade("Spit");
+				ChangeState(Attack, State.Attack);
+			}
 		}
 	}
 
