@@ -40,6 +40,11 @@ public class FollowPlayer : MonoBehaviour {
 	// Use this for initialization
     void Start () {
         this.player = FindObjectOfType<PlayerController>();
+        this.transform.position = new Vector3(
+            player.transform.position.x, 
+            player.transform.position.y,
+            transform.position.z
+        );
 	}
 
     public void Focus(Transform target){

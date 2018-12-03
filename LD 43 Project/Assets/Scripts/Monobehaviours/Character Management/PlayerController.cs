@@ -25,7 +25,8 @@ public class PlayerController : CharacterDriver {
     public float groundDamping = 0.05f;
 
     public float dashSpeed = 15f;
-    private bool canDash = true;
+    public bool canDash {get; private set;}
+	public bool canWallJump {get; private set;}
     public float knockBackHeight = 1f;
     public float knockBackSpeed = 1f;
 
@@ -373,5 +374,13 @@ public class PlayerController : CharacterDriver {
         kCharacter.kAnimation.PlayQueued("InAir");
         ChangePlayerState(InAir, State.InAir);
     }
+
+	public void EnableDash(bool dashOn){
+		this.canDash = dashOn;
+	}
+
+	public void EnableWallJump(bool wallJumpOn){
+		this.canWallJump = wallJumpOn;
+	}
 
 }

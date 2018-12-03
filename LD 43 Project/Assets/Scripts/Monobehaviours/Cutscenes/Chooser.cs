@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Chooser : MonoBehaviour {
 
-    public List<AbilityHandler.Ability> abilities;
-    public List<RectTransform> optionIcons;
+    public List<AbilityHandler.Ability> abilities = new List<AbilityHandler.Ability>();
+    public List<RectTransform> optionIcons = new List<RectTransform>();
     public RectTransform selectArrow;
 
     public AbilityHandler.Ability SelectedAbility {
@@ -15,12 +15,6 @@ public class Chooser : MonoBehaviour {
     }
 
     public int selectedIndex = 0;
-
-	// Use this for initialization
-	void Awake () {
-        abilities = new List<AbilityHandler.Ability>();
-        optionIcons = new List<RectTransform>();
-	}
 
     public void UpdateOptions()
     {

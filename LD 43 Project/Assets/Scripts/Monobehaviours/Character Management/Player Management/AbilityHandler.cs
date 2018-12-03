@@ -58,6 +58,12 @@ public class AbilityHandler : MonoBehaviour {
                 InventoryHarness harness = FindObjectOfType<InventoryHarness>();
                 harness.AddGun(peashooter, true);
                 break;
+            case Ability.Dash:
+                player.EnableDash(true);
+                break;
+            case Ability.Walljump:
+                player.EnableWallJump(true);
+                break;
         }
     }
 
@@ -78,6 +84,12 @@ public class AbilityHandler : MonoBehaviour {
             case Ability.Gun:
                 InventoryHarness harness = FindObjectOfType<InventoryHarness>();
                 harness.UnEquipGun();
+                break;
+            case Ability.Dash:
+                player.EnableDash(false);
+                break;
+            case Ability.Walljump:
+                player.EnableWallJump(false);
                 break;
         }
     }
