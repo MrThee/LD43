@@ -1112,6 +1112,8 @@ MonoBehaviour:
     icon: {fileID: 224491653727363628, guid: 2e75b4299113c487bb2762e47ac21794, type: 2}
   - name: 1
     icon: {fileID: 224861562719553042, guid: 672afc7eea2914f578d9a3b014858624, type: 2}
+  - name: 3
+    icon: {fileID: 224602798389107310, guid: b1a2a26f561c841df8141fe7fe517b15, type: 2}
   butterflyPrefab: {fileID: 114717366214570574, guid: c2d7d879f64774f5086a31021db77d67,
     type: 2}
   peashooter: {fileID: 114380802696738240, guid: e66897a4609c8cf458e6d598df4ecb4a,

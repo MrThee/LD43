@@ -223,7 +223,8 @@ public class PlayerController : CharacterDriver {
 
 			// Wall-jump walljump wall jump
 			if(	mk_inputParser.space.pressed && 
-				ms.currentTerrain == MovementState.TerrainNav.Wall) 
+               ms.currentTerrain == MovementState.TerrainNav.Wall &&
+               abilityHandler.HasAbility(AbilityHandler.Ability.Walljump)) 
 			{
 				kCharacter.kAnimation.Play("Jump");
 				kCharacter.kAnimation.Play("InAir");

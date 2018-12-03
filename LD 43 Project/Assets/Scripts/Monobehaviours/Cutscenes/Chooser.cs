@@ -41,9 +41,9 @@ public class Chooser : MonoBehaviour {
             RectTransform icon = Instantiate(iconPair.icon, transform, false);
             float positionRatio = 0.5f;
             if (abilities.Count > 1) {
-                positionRatio = i / (abilities.Count - 1);
+                positionRatio = ((float) i) / (abilities.Count - 1);
             }
-            icon.transform.localPosition = (-200 + 400 * positionRatio) * Vector3.right;
+            icon.transform.localPosition = (-200f + 400f * positionRatio) * Vector3.right;
 
             optionIcons.Add(icon);
         }

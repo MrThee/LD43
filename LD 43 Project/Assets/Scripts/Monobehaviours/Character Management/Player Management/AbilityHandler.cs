@@ -36,6 +36,8 @@ public class AbilityHandler : MonoBehaviour {
 
         OwnedAbilities = new List<Ability>();
         GrantAbility(Ability.Dash);
+        GrantAbility(Ability.Butterfly);
+        GrantAbility(Ability.Walljump);
     }
 
     public bool HasAbility(Ability ability) {
