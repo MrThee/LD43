@@ -55,19 +55,42 @@ public class InputParser {
     public PressedRelease space {get; private set;}
     public PressedRelease shift { get; private set; }
 
+    public PressedRelease up { get; private set; }
     public PressedRelease down {get; private set;}
     public PressedRelease left {get; private set;}
     public PressedRelease right {get; private set;}
-    public PressedRelease mouse0 { get; private set;}
+
+    // Wrappers around these that represent what action they're used for
+    public PressedRelease Jump
+    {
+        get
+        {
+            return up;
+        }
+    }
+    public PressedRelease Dash
+    {
+        get
+        {
+            return shift;
+        }
+    }
+    public PressedRelease Shoot
+    {
+        get
+        {
+            return space;
+        }
+    }
 
     public InputParser() {
         this.space = new PressedRelease(KeyCode.Space);
-        this.shift = new PressedRelease(KeyCode.LeftShift);
+        this.shift = new PressedRelease(KeyCode.LeftShift, KeyCode.RightShift);
 
+        this.up = new PressedRelease(KeyCode.W, KeyCode.UpArrow);
         this.down = new PressedRelease(KeyCode.S, KeyCode.DownArrow);
         this.left = new PressedRelease(KeyCode.A, KeyCode.LeftArrow);
         this.right = new PressedRelease(KeyCode.D, KeyCode.RightArrow);
-        this.mouse0 = new PressedRelease(KeyCode.Mouse0);
     }
 
     public Vector2 GetDirection() {
@@ -93,6 +116,9 @@ public class InputParser {
     // Call from an owning monobehaviour's "Update"
     public void UpdateInputBuffers(){
         // Jump
+        up.Buffer();
+
+        // Shoot
         space.Buffer();
 
         // Dash
@@ -103,7 +129,6 @@ public class InputParser {
 
         right.Buffer();
         left.Buffer();
-        mouse0.Buffer();
     }
 
     // Call from a "FixedUpdate" after all inputs have been read/consumed
@@ -113,6 +138,6 @@ public class InputParser {
         down.Reset();
         right.Reset();
         left.Reset();
-        mouse0.Reset();
+        up.Reset();
     }
 }

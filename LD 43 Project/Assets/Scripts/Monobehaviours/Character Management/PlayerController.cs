@@ -114,11 +114,11 @@ public class PlayerController : CharacterDriver {
 		}
 
         if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
-            if (mk_inputParser.shift.pressed)
+            if (mk_inputParser.Dash.pressed)
             {
                 TryDash();
             }
-            if (mk_inputParser.space.pressed)
+            if (mk_inputParser.Jump.pressed)
             {
                 kCharacter.movementState.LaunchForHeight(maxJumpHeight);
                 kCharacter.kAnimation.Play("Jump");
@@ -128,7 +128,7 @@ public class PlayerController : CharacterDriver {
             }
 
 			if(kInventoryHarness.currentGun) {
-				if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+                if(mk_inputParser.Shoot.pressed && mk_fireCooldown.active == false){
 					// FIRE!
 					kCharacter.kAnimation.Stop();
 					kCharacter.kAnimation.Play("FireFromIdle");
@@ -158,7 +158,7 @@ public class PlayerController : CharacterDriver {
             userDirection = mk_inputParser.GetDirection();
 
 			if(kInventoryHarness.currentGun){
-				if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+				if(mk_inputParser.Shoot.pressed && mk_fireCooldown.active == false){
 					// FIRE!
 					kCharacter.kAnimation.Play("FireFromRun");
 					// kCharacter.kAnimation.CrossFadeQueued("Idle", 0.1f);
@@ -175,14 +175,14 @@ public class PlayerController : CharacterDriver {
 			return;
 		}
 
-		if(mk_inputParser.space.pressed) {
+		if(mk_inputParser.Jump.pressed) {
 			ms.LaunchForHeight(maxJumpHeight);
 			kCharacter.kAnimation.Play("Jump");
 			kCharacter.kAnimation.PlayQueued("InAir");
 			ChangePlayerState(InAir, State.InAir);
 			return;
 		}
-        if (mk_inputParser.shift.pressed)
+        if (mk_inputParser.Dash.pressed)
         {
             TryDash();
         }
@@ -202,7 +202,7 @@ public class PlayerController : CharacterDriver {
 
         if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
             // Short-hop
-            if (mk_inputParser.space.released &&
+            if (mk_inputParser.Jump.released &&
                 ms.verticalSpeed > 0f)
             {
                 ms.OverrideVerticalSpeed(ms.verticalSpeed * 0.5f);
@@ -215,14 +215,14 @@ public class PlayerController : CharacterDriver {
             }
 
 			// Dash
-            if (mk_inputParser.shift.pressed && canDash)
+            if (mk_inputParser.Dash.pressed && canDash)
             {
                 canDash = false;
                 TryDash();
             }
 
 			// Wall-jump walljump wall jump
-			if(	mk_inputParser.space.pressed && 
+			if(	mk_inputParser.Jump.pressed && 
                ms.currentTerrain == MovementState.TerrainNav.Wall &&
                abilityHandler.HasAbility(AbilityHandler.Ability.Walljump)) 
 			{
@@ -241,7 +241,7 @@ public class PlayerController : CharacterDriver {
 
 			// !GUN!
 			if(kInventoryHarness.currentGun){
-				if(mk_inputParser.mouse0.pressed && mk_fireCooldown.active == false){
+                if(mk_inputParser.Shoot.pressed && mk_fireCooldown.active == false){
 					// FIRE!
 					kCharacter.kAnimation.Stop();
 					kCharacter.kAnimation.Play("FireFromAir");
