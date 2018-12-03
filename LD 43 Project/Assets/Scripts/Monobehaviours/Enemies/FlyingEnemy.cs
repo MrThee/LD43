@@ -17,7 +17,7 @@ public class FlyingEnemy : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         Vector3 direction = (player.transform.position - transform.position).normalized;
         Vector3 desiredVelocity = speed * direction;
         velocity = Vector3.Slerp(velocity, desiredVelocity, 0.1f);
@@ -30,5 +30,9 @@ public class FlyingEnemy : MonoBehaviour {
         if (hitPlayer) {
             hitPlayer.TakeDamage(1, hitPlayer.transform.position - transform.position);
         }
+    }
+
+    public void TakeDamage(int damage, Vector3 direction) {
+        Destroy(gameObject);
     }
 }

@@ -33,9 +33,12 @@ public class Projectile : MonoBehaviour {
 		Vector3 movementDelta = velocity * deltaTime;
 		float deltaLength = movementDelta.magnitude;
 		int lm = 0x801; // Hitboxes and default layer
-		bool hit = Physics.Raycast(transform.position, velocity, deltaLength, lm);
+        RaycastHit hitInfo;
+        bool hit = Physics.Raycast(transform.position, velocity, out hitInfo, deltaLength, lm);
 
 		if(hit) {
+            TryDoDamage(hitInfo);
+
 			Destroy();
 			return;
 		}
@@ -44,6 +47,18 @@ public class Projectile : MonoBehaviour {
 			transform.position += velocity * deltaTime;
 		}
 	}
+
+    void TryDoDamage(RaycastHit hitInfo) {
+        Rigidbody body = hitInfo.rigidbody;
+        if (body == null) {
+            return;
+        }
+        FlyingEnemy enemy = body.GetComponent<FlyingEnemy>();
+        if (enemy == null) {
+            return;
+        }
+        enemy.TakeDamage(1, velocity);
+    }
 
 	void Destroy() {
 		if(kTrail){
