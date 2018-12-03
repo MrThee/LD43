@@ -11,7 +11,7 @@ public class AbilityHandler : MonoBehaviour {
         Walljump
     }
 
-    public List<Ability> OwnedAbilities { get; private set; }
+    public List<Ability> OwnedAbilities;
 
     public ButterflyFriend butterflyPrefab;
 
@@ -34,7 +34,7 @@ public class AbilityHandler : MonoBehaviour {
 
     public void GrantAbility(Ability ability)
     {
-        OwnedAbilities.Remove(ability);
+        OwnedAbilities.Add(ability);
 
         // If needed, logic for adding the thing
         switch (ability) {

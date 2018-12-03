@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour {
 	public Transform firePoint;
 
     private GameStateHandler gameStateHandler;
+    private AbilityHandler abilityHandler;
 	private InputParser mk_inputParser;
 	private OnForSeconds mk_fireCooldown;
 	private Vector3 m_intendedFacingDirection; // Never assign Vector3.zero to this.
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour {
 		kCharacter.kAnimation.Play("Idle");
 
         gameStateHandler = FindObjectOfType<GameStateHandler>();
+        abilityHandler = GetComponentInChildren<AbilityHandler>();
 	}
 
 	void Update() {
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour {
         if (gameStateHandler.state == GameStateHandler.GameState.GamePlay) {
             if (mk_inputParser.shift.pressed)
             {
-                StartDash();
+                TryDash();
             }
             if (mk_inputParser.space.pressed)
             {
@@ -174,7 +176,7 @@ public class PlayerController : MonoBehaviour {
 		}
         if (mk_inputParser.shift.pressed)
         {
-            StartDash();
+            TryDash();
         }
 
 		// Keep movin'
@@ -208,7 +210,7 @@ public class PlayerController : MonoBehaviour {
             if (mk_inputParser.shift.pressed && canDash)
             {
                 canDash = false;
-                StartDash();
+                TryDash();
             }
 
 			// Wall-jump
@@ -300,8 +302,13 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-    void StartDash()
+    void TryDash()
     {
+        if (!abilityHandler.HasAbility(AbilityHandler.Ability.Dash)) {
+            // No dash for you.
+            return;
+        }
+
         kCharacter.movementState.OverrideVerticalSpeed(5f);
 
         float dashVelocity = GetDashVelocity();
