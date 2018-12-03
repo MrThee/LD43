@@ -83,8 +83,7 @@ public class CutsceneHandler : MonoBehaviour
     }
 
     private void ResetCamera() {
-        PlayerController player = FindObjectOfType<PlayerController>();
-        camera.kFocus = player.transform;
+        camera.FocusOnPlayer();
         camera.config = defaultCameraConfig;
     }
 }

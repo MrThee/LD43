@@ -9,7 +9,7 @@ public class PlayerController : CharacterDriver {
 		InAir,
 		Running
 	}
-	
+
 	public InventoryHarness kInventoryHarness;
 	[Header("Movement")]
 	public float maxGroundSpeed = 10f;
@@ -345,8 +345,9 @@ public class PlayerController : CharacterDriver {
     }
 
     public override void TakeDamage(int amount, Vector3 direction) {
+		// Don't call base.
+		hp -= amount;
         Debug.Log("Taking some damage");
-        base.TakeDamage(amount, direction);
         // Just quickly push the player back a little. Hopefully doesn't break things.
 
         kCharacter.movementState.LaunchForHeight(knockBackHeight);

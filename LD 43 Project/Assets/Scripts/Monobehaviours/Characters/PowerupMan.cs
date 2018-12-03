@@ -34,22 +34,22 @@ public class PowerupMan : MonoBehaviour {
         cutsceneHandler.StartCutscene(new List<System.Action>
         {
             () => {
-                camera.kFocus = transform;
+                camera.Focus(transform);
                 camera.config.distanceToFocus = 10;
                 camera.config.focusOffset = 0;
                 cutsceneHandler.SetSpeech("Hello friend");
             },
             () => {
-                camera.kFocus = player.transform;
+                camera.FocusOnPlayer();
                 cutsceneHandler.SetSpeech("Hi there");
             },
             () => {
-                camera.kFocus = transform;
+                camera.Focus(transform);
                 cutsceneHandler.chooser.gameObject.SetActive(true);
             },
             () => {
                 cutsceneHandler.chooser.gameObject.SetActive(false);
-                camera.kFocus = transform;
+                camera.Focus(transform);
                 cutsceneHandler.SetSpeech(
                     string.Format(
                         "You picked item {0}. Thanks.",
