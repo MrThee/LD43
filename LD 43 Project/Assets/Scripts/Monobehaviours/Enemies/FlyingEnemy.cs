@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class FlyingEnemy : MonoBehaviour {
     
-    public Rigidbody body;
-    public PlayerController player;
+    private Rigidbody body;
+    private PlayerController player;
 
     public float speed = 1f;
     private Vector3 velocity = new Vector3();
 
 	// Use this for initialization
 	void Start () {
+        body = GetComponent<Rigidbody>();
+        player = FindObjectOfType<PlayerController>();
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         Vector3 direction = (player.transform.position - transform.position).normalized;
         Vector3 desiredVelocity = speed * direction;
         velocity = Vector3.Slerp(velocity, desiredVelocity, 0.1f);
@@ -26,7 +28,11 @@ public class FlyingEnemy : MonoBehaviour {
     {
         PlayerController hitPlayer = other.gameObject.GetComponent<PlayerController>();
         if (hitPlayer) {
-            hitPlayer.TakeDamage(1, (transform.position - hitPlayer.transform.position).normalized);
+            hitPlayer.TakeDamage(1, hitPlayer.transform.position - transform.position);
         }
+    }
+
+    public void TakeDamage(int damage, Vector3 direction) {
+        Destroy(gameObject);
     }
 }

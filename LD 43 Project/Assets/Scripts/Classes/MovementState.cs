@@ -17,7 +17,7 @@ public class MovementState {
 
 	// Handy cached fields
 	// Populated after currentTerrainNav
-	public Vector2 preJumpLateralVelocity {get; private set;}
+	public Vector2 preJumpLateralVelocity {get; set;}
 
 	public enum TerrainNav {
 		Ground,

@@ -365,6 +365,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1724400592524794
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4224339064306050}
+  - component: {fileID: 114943531352140044}
+  m_Layer: 0
+  m_Name: abiltyhandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1724972591839840
 GameObject:
   m_ObjectHideFlags: 1
@@ -580,6 +596,19 @@ Transform:
   m_Father: {fileID: 4512770327172358}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4224339064306050
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1724400592524794}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4376485855291352}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4376485855291352
 Transform:
   m_ObjectHideFlags: 1
@@ -592,6 +621,7 @@ Transform:
   m_Children:
   - {fileID: 4548123832592180}
   - {fileID: 4065173162076482}
+  - {fileID: 4224339064306050}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1043,12 +1073,14 @@ MonoBehaviour:
   maxGroundSpeed: 8
   maxGroundDecelStartSpeed: 3
   maxJumpHeight: 3
+  wallJumpHorzSpeed: 8
   fastFallSpeed: 8
   groundAcceleration: 50
   groundDeceleration: 10
   groundDamping: 0.05
   dashSpeed: 15
-  canDash: 1
+  knockBackHeight: 2
+  knockBackSpeed: 8
   firePoint: {fileID: 4052589725662708}
 --- !u!114 &114359720816726340
 MonoBehaviour:
@@ -1091,6 +1123,19 @@ MonoBehaviour:
   kController: {fileID: 143311701123298604}
   kAnimation: {fileID: 111760079627574662}
   kBodyTransform: {fileID: 4548123832592180}
+--- !u!114 &114943531352140044
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1724400592524794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 015e12c5b581f48109b89564fd61cf01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  butterflyPrefab: {fileID: 114717366214570574, guid: c2d7d879f64774f5086a31021db77d67,
+    type: 2}
 --- !u!137 &137181097877434788
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
@@ -1165,10 +1210,10 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.5
+  m_Height: 1.3
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.83, z: 0}
+  m_Center: {x: 0, y: 0.73, z: 0}

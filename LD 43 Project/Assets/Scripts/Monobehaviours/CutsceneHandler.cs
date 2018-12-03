@@ -2,11 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CutsceneHandler : MonoBehaviour
 {
-    public Chooser chooser;
-
     private int actionIndex = 0;
     private List<Action> cutsceneActions;
     private GameStateHandler gameStateHandler;
@@ -14,14 +13,16 @@ public class CutsceneHandler : MonoBehaviour
     private FollowPlayer camera;
     private FollowPlayer.CameraConfig defaultCameraConfig;
 
+    public Chooser chooser;
+    public TextMeshProUGUI textMesh;
+    public RectTransform speechBubble;
+
     // Use this for initialization
     void Start()
     {
         gameStateHandler = FindObjectOfType<GameStateHandler>();
         camera = FindObjectOfType<FollowPlayer>();
         defaultCameraConfig = camera.config;
-
-        chooser = FindObjectOfType<Chooser>();
 
         cutsceneActions = new List<Action>();
     }
@@ -41,6 +42,8 @@ public class CutsceneHandler : MonoBehaviour
     }
 
     private void PerformNextStep() {
+        HideSpeechBox();
+
         Action action = cutsceneActions[actionIndex];
         action.Invoke();
 
@@ -50,6 +53,17 @@ public class CutsceneHandler : MonoBehaviour
             EndCutscene();
             return;
         }
+    }
+
+    private void HideSpeechBox() {
+        speechBubble.gameObject.SetActive(false);
+        textMesh.gameObject.SetActive(false);
+    }
+
+    public void SetSpeech(String text) {
+        speechBubble.gameObject.SetActive(true);
+        textMesh.gameObject.SetActive(true);
+        textMesh.SetText(text);
     }
 
     public void StartCutscene(List<Action> cutsceneSteps) {

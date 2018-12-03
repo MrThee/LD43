@@ -23,7 +23,9 @@ public class PlayerController : MonoBehaviour {
     public float groundDamping = 0.05f;
 
     public float dashSpeed = 15f;
-    public bool canDash = true;
+    private bool canDash = true;
+    public float knockBackHeight = 1f;
+    public float knockBackSpeed = 1f;
 
 	[Header("Combat")]
 	public Transform firePoint;
@@ -304,6 +306,7 @@ public class PlayerController : MonoBehaviour {
 
         float dashVelocity = GetDashVelocity();
         kCharacter.movementState.OverrideLateralVelocity(dashVelocity);
+        kCharacter.movementState.preJumpLateralVelocity = new Vector2(dashVelocity, 0);
     }
 
     float GetDashVelocity()
@@ -332,8 +335,20 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void TakeDamage(int amount, Vector3 direction) {
+        Debug.Log("Taking some damage");
         health -= amount;
         // Just quickly push the player back a little. Hopefully doesn't break things.
+
+        kCharacter.movementState.LaunchForHeight(knockBackHeight);
+        if (direction.x < 0) {
+            kCharacter.movementState.OverrideLateralVelocity(-knockBackSpeed);
+        }
+        else {
+            kCharacter.movementState.OverrideLateralVelocity(knockBackSpeed);
+        }
+        kCharacter.kAnimation.Play("Jump");
+        kCharacter.kAnimation.PlayQueued("InAir");
+        ChangePlayerState(InAir, State.InAir);
     }
 
 }
