@@ -304,6 +304,7 @@ public class PlayerController : MonoBehaviour {
 
         float dashVelocity = GetDashVelocity();
         kCharacter.movementState.OverrideLateralVelocity(dashVelocity);
+        kCharacter.movementState.preJumpLateralVelocity = new Vector2(dashVelocity, 0);
     }
 
     float GetDashVelocity()
@@ -334,6 +335,7 @@ public class PlayerController : MonoBehaviour {
     public void TakeDamage(int amount, Vector3 direction) {
         health -= amount;
         // Just quickly push the player back a little. Hopefully doesn't break things.
+
     }
 
 }
