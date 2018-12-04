@@ -49,6 +49,8 @@ public class PlayerController : CharacterDriver {
 	private System.Action<float> m_stateAction;
 	private Vector3 m_spawnPosition;
 
+	private List<Hitbox> mk_hitboxes;
+
     public int Score;
 
 	protected override void Start () {
@@ -63,6 +65,8 @@ public class PlayerController : CharacterDriver {
 		this.m_intendedFacingDirection = kCharacter.planarForward;
 		this.takeDamage = new WillDid<int>();
 		this.m_spawnPosition = transform.position;
+		this.mk_hitboxes = new List<Hitbox>();
+		this.GetComponentsInChildren<Hitbox>(true, this.mk_hitboxes);
 		kCharacter.kAnimation.Play("Idle");
 		kFaceHarness.GenerateHead();
 		kRendWrap.Rebind();
@@ -303,6 +307,7 @@ public class PlayerController : CharacterDriver {
 			kCharacter.movementState.LaunchForHeight(1f);
 			kFaceHarness.GenerateHead(); // Regenerate.
 			kRendWrap.Rebind(); // New meshes will be created...
+			mk_hitboxes.ForEach(hb => hb.gameObject.SetActive(true));
 			hp = maxHP;
 			ChangePlayerState(InAir, State.InAir);
 		}
@@ -421,6 +426,7 @@ public class PlayerController : CharacterDriver {
 
 		kCharacter.kAnimation.Play("Die");
 		kCharacter.movementState.ZeroOut();
+		mk_hitboxes.ForEach(hb => hb.gameObject.SetActive(false));
 		ChangePlayerState(Dying, State.Dying);
 	}
 

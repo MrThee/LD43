@@ -35,6 +35,9 @@ public class RendererWrapper : MonoBehaviour {
 	}
 	
 	public void Rebind(List<Renderer> Rs){
+		if(this.mk_defaultBindings == null){
+			this.mk_defaultBindings = new Dictionary<Renderer, Material>();
+		}
 		this.mk_defaultBindings.Clear();
 		foreach(Renderer r in Rs){
 			this.mk_defaultBindings[r] = r.sharedMaterial;
