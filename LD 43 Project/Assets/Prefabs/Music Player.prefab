@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4869693117272502}
+  - component: {fileID: 114977241092626754}
   - component: {fileID: 82462482465551612}
   - component: {fileID: 82195956044693578}
   - component: {fileID: 82553334970079862}
@@ -695,3 +696,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &114977241092626754
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1225179567590518}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 526641f9893cb4d2e84e0c9bc643d460, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Intro: {fileID: 245889875688797064, guid: a4cd2d39576084b1d8b4b0d888cfcb07, type: 2}
+  Simple: {fileID: 245862680304153988, guid: a4cd2d39576084b1d8b4b0d888cfcb07, type: 2}
+  Background1: {fileID: 245836598611488778, guid: a4cd2d39576084b1d8b4b0d888cfcb07,
+    type: 2}
+  Background2: {fileID: 245457332419010760, guid: a4cd2d39576084b1d8b4b0d888cfcb07,
+    type: 2}
+  Background3: {fileID: 245523051148407990, guid: a4cd2d39576084b1d8b4b0d888cfcb07,
+    type: 2}
+  Full: {fileID: 245824114913504914, guid: a4cd2d39576084b1d8b4b0d888cfcb07, type: 2}
+  Scary: {fileID: 245833919997986356, guid: a4cd2d39576084b1d8b4b0d888cfcb07, type: 2}
+  Mixer: {fileID: 24100000, guid: a4cd2d39576084b1d8b4b0d888cfcb07, type: 2}
