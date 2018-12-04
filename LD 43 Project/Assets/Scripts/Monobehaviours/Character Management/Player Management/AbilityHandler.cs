@@ -35,7 +35,6 @@ public class AbilityHandler : MonoBehaviour {
         player = FindObjectOfType<PlayerController>();
 
         OwnedAbilities = new List<Ability>();
-        GrantAbility(Ability.Dash);
         GrantAbility(Ability.Butterfly);
         GrantAbility(Ability.Walljump);
     }
