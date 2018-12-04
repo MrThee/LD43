@@ -47,7 +47,7 @@ public class PlayerController : CharacterDriver {
 
 	public State state { get; private set;}
 	private System.Action<float> m_stateAction;
-	private Vector3 m_spawnPosition;
+	public Vector3 m_spawnPosition;
 
 	private List<Hitbox> mk_hitboxes;
 
