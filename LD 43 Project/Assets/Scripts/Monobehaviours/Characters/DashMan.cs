@@ -36,7 +36,8 @@ public class DashMan : MonoBehaviour {
         cutsceneHandler.StartCutscene(new List<System.Action>
         {
             () => {
-                camera.Focus(transform);
+                musicController.TransitionTo(musicController.Background1);
+               camera.Focus(transform);
                 camera.config.distanceToFocus = 10;
                 camera.config.focusOffset = 0;
                 cutsceneHandler.SetSpeech("Greetings little one!");
@@ -90,7 +91,7 @@ public class DashMan : MonoBehaviour {
 
                 handler.GrantAbility(AbilityHandler.Ability.Dash);
 
-                musicController.TransitionTo(musicController.Background1);
+                musicController.TransitionTo(musicController.Full);
             },
             () => {
                 cutsceneHandler.SetSpeech("As a student of the legendary Dash Man, press Shift to perform a legendary Dash!");

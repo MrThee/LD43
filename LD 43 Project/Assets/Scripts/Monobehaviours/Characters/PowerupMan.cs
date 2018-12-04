@@ -36,6 +36,7 @@ public class PowerupMan : MonoBehaviour {
         cutsceneHandler.StartCutscene(new List<System.Action>
         {
             () => {
+                musicController.TransitionTo(musicController.Background1);
                 camera.Focus(player.transform);
                 camera.config.distanceToFocus = 10;
                 camera.config.focusOffset = 0;
@@ -105,7 +106,7 @@ public class PowerupMan : MonoBehaviour {
 
                 handler.GrantAbility(AbilityHandler.Ability.Gun);
 
-                musicController.TransitionTo(musicController.Background1);
+                musicController.TransitionTo(musicController.Background3);
             },
             () => {
                 cutsceneHandler.SetSpeech("Now behold! The peashooter!");
